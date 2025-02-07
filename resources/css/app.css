@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@theme {
+    --font-poppins: "Poppins", "sans-serif";
+}
+
+.navbar-nav {
+    @apply hidden xl:flex;
+}
+
+.navbar {
+    @apply bg-[#F6F6F6];
+}
+
+.navbar-nav.show {
+    @apply flex;
+    delay: 0.5s;
+}
+
+.navbar.scrolled {
+    @apply bg-[#F6F6F6] shadow-md;
+}
+
+.linkActive {
+    @apply text-blue-800;
+}
+
+.footer {
+    @apply bg-[#F6F6F6];
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.10);
+}
+
+.ck-editor__editable {
+    min-height: 300px;
+    padding: 500px;
+}
+
+.ck {
+    --ck-color-base-border: #2b7fff;
+}
