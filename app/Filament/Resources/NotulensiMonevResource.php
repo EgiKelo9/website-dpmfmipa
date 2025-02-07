@@ -2,23 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\NotulensiMonevResource\Pages;
+use Filament\Forms;
+use App\Models\User;
+use Filament\Tables;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use App\Models\JadwalMonev;
+use App\Models\ProgramKerja;
 use App\Models\NotulensiMonev;
 use App\Models\PenilaianMonev;
-use App\Models\ProgramKerja;
-use App\Models\User;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Filament\Resources\NotulensiMonevResource\Pages;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class NotulensiMonevResource extends Resource
 {
@@ -182,6 +183,11 @@ class NotulensiMonevResource extends Resource
                                 ->panelLayout('grid')
                                 ->directory('dokumentasi-monev')
                                 ->preserveFilenames()
+                                ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                                    return (string) str($file
+                                    ->getClientOriginalName())
+                                    ->prepend(now()->format('Y-m-d-H-i-s') . '-');
+                                })
                                 ->visibility('public')
                                 ->columnSpanFull()
                                 ->label('Foto Dokumentasi')
@@ -259,7 +265,8 @@ class NotulensiMonevResource extends Resource
                     Tables\Actions\Action::make('Unduh')
                         ->icon('heroicon-o-arrow-down-tray')
                         ->label('Unduh')
-                        ->url(fn($record): string => route('notulensi.download', ['id' => $record->id]), shouldOpenInNewTab: false)
+                        ->url(fn($record): string => route('notulensi.download', ['id' => $record->id]), shouldOpenInNewTab: true)
+                        ->openUrlInNewTab()
                         ->successRedirectUrl(route('filament.admin.resources.notulensi-monev.index')),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),

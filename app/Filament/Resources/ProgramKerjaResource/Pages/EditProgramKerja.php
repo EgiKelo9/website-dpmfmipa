@@ -11,6 +11,7 @@ use App\Filament\Resources\ProgramKerjaResource;
 class EditProgramKerja extends EditRecord
 {
     protected static string $resource = ProgramKerjaResource::class;
+    protected $users;
     public function getTitle(): string
     {
         return 'Ubah Data ' . $this->getRecord()->name;
@@ -31,7 +32,7 @@ class EditProgramKerja extends EditRecord
         $users = $this->getRecord()->timMonev()->pluck('id_user');
         foreach ($users as $user) {
             Notification::make()
-                ->success()
+                ->info()
                 ->title('Penugasan Tim Monev')
                 ->body("Anda telah ditugaskan sebagai tim monev untuk program kerja {$this->getRecord()->name}")
                 ->sendToDatabase(User::find($user));

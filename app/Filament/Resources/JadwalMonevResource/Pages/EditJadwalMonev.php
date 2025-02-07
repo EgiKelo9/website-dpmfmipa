@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\JadwalMonevResource\Pages;
 
-use App\Filament\Resources\JadwalMonevResource;
+use App\Models\User;
 use Filament\Actions;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\JadwalMonevResource;
 
 class EditJadwalMonev extends EditRecord
 {
@@ -22,5 +24,17 @@ class EditJadwalMonev extends EditRecord
             Actions\ForceDeleteAction::make(),
             Actions\RestoreAction::make(),
         ];
+    }
+
+    protected function afterSave(): void
+    {
+        $users = $this->getRecord()->timMonev()->pluck('id_user');
+        foreach ($users as $user) {
+            Notification::make()
+                ->info()
+                ->title('Penugasan Jadwal Monev')
+                ->body("Anda telah ditugaskan sebagai tim monev dalam {$this->getRecord()->name} {$this->getRecord()->programKerja->name}")
+                ->sendToDatabase(User::find($user));
+        }
     }
 }

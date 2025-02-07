@@ -39,7 +39,7 @@ class TimMonevRelationManager extends RelationManager
                     ->searchable()
                     ->label('Nama Lengkap')
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('role')
+                Tables\Columns\TextColumn::make('specifiedRole')
                     ->sortable()
                     ->searchable()
                     ->label('Jabatan')
@@ -47,7 +47,7 @@ class TimMonevRelationManager extends RelationManager
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
-                    ->label('Jabatan')
+                    ->label('Komisi')
                     ->options([
                         'Inti' => 'Inti',
                         'Komisi 1' => 'Komisi 1',
