@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\LaporanResource\RelationManagers;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use App\Filament\Resources\LaporanResource\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\LaporanResource\RelationManagers\MentionsRelationManager;
 
 class LaporanResource extends Resource
 {
@@ -154,6 +155,7 @@ class LaporanResource extends Resource
     {
         return [
             CommentsRelationManager::class,
+            MentionsRelationManager::class,
         ];
     }
 

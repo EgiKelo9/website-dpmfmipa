@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class JadwalMonev extends Model
 {
@@ -30,5 +31,34 @@ class JadwalMonev extends Model
     public function notulensi()
     {
         return $this->hasOne(NotulensiMonev::class, 'id_jadwal');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::updated(function (JadwalMonev $model) {
+            if ($model->isDirty('tanggal')) {
+                $targetDate = \DateTime::createFromFormat('Y-m-d', $model->tanggal);
+                $daysRemaining = $targetDate->diff(now())->days;
+                $timMonev = $model->timMonev()->pluck('id')->toArray();
+                foreach ($timMonev as $id) {
+                    if ($model->tanggal <= now()->format('Y-m-d')) {
+                        Notification::make()
+                            ->title('Pengingat Jadwal Monev')
+                            ->body("Hari ini adalah jadwal monev Anda pada {$model->name} {$model->programKerja()->first()->name}.")
+                            ->warning()
+                            ->sendToDatabase(User::find($id));
+                    } elseif (($daysRemaining == 6 || $daysRemaining <= 2) && $daysRemaining >= 0) {
+                        $daysRemaining++;
+                        Notification::make()
+                            ->title('Pengingat Jadwal Monev')
+                            ->body("{$daysRemaining} hari lagi menuju {$model->name} {$model->programKerja()->first()->name}.")
+                            ->warning()
+                            ->sendToDatabase(User::find($id));
+                        $daysRemaining--;
+                    }
+                }
+            }
+        });
     }
 }

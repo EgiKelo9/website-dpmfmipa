@@ -34,4 +34,8 @@ class Surat extends Model
     {
         return $this->hasMany(Comment::class, 'id_surat');
     }
+    public function mentions()
+    {
+        return $this->hasMany(Mention::class, 'id_surat');
+    }
 }

@@ -45,7 +45,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 5']);
+        return in_array($user->role, ['Admin', 'Komisi 5']);
     }
 
     /**
@@ -53,7 +53,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 5']);
+        return in_array($user->role, ['Admin', 'Komisi 5']);
     }
 
     /**
@@ -61,6 +61,6 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 5']);
+        return in_array($user->role, ['Admin', 'Komisi 5']);
     }
 }

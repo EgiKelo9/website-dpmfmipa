@@ -77,10 +77,11 @@ class CommentsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->label('Lihat Selengkapnya')
-                    ->recordTitle(fn ($record) => 'Komentar ' . $record->user->username),
+                    ->recordTitle(fn($record) => 'Komentar ' . $record->user->username),
                 Tables\Actions\EditAction::make()
-                    ->recordTitle(fn ($record) => 'Komentar ' . $record->user->username),
-                Tables\Actions\DeleteAction::make(),
+                    ->recordTitle(fn($record) => 'Komentar ' . $record->user->username),
+                Tables\Actions\DeleteAction::make()
+                    ->recordTitle(fn($record) => 'Komentar ' . $record->user->username),
             ]);
     }
 }

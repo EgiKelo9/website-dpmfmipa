@@ -45,7 +45,7 @@ class KategoriAspirasiPolicy
      */
     public function delete(User $user, KategoriAspirasi $kategoriAspirasi): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 3']);
+        return in_array($user->role, ['Admin', 'Komisi 3']);
     }
 
     /**
@@ -53,7 +53,7 @@ class KategoriAspirasiPolicy
      */
     public function restore(User $user, KategoriAspirasi $kategoriAspirasi): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 3']);
+        return in_array($user->role, ['Admin', 'Komisi 3']);
     }
 
     /**
@@ -61,6 +61,6 @@ class KategoriAspirasiPolicy
      */
     public function forceDelete(User $user, KategoriAspirasi $kategoriAspirasi): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 3']);
+        return in_array($user->role, ['Admin', 'Komisi 3']);
     }
 }

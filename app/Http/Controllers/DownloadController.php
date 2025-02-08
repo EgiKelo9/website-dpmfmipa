@@ -25,6 +25,8 @@ class DownloadController extends Controller
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('notulensi-monev.docx');
 
             $timMonev = collect($notulensi->tim_monev)
+                ->sort()
+                ->values()
                 ->map(function($idUser, $index) {
                     $user = User::find(intval($idUser));
                     return ($index + 1) . ". {$user->name} ({$user->specifiedRole})";

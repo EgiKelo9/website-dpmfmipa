@@ -11,6 +11,7 @@ use App\Models\Surat;
 use App\Models\Comment;
 use App\Models\Laporan;
 use App\Models\Lembaga;
+use App\Models\Mention;
 use App\Models\Aspirasi;
 use App\Models\JadwalMonev;
 use App\Models\ProgramKerja;
@@ -28,6 +29,7 @@ use App\Models\PenilaianMonev;
 use App\Policies\CommentPolicy;
 use App\Policies\LaporanPolicy;
 use App\Policies\LembagaPolicy;
+use App\Policies\MentionPolicy;
 use App\Models\KategoriAspirasi;
 use App\Policies\AspirasiPolicy;
 use App\Policies\JadwalMonevPolicy;
@@ -37,9 +39,9 @@ use App\Policies\KategoriArsipPolicy;
 use App\Policies\KategoriSuratPolicy;
 use App\Policies\NotulensiMonevPolicy;
 use App\Policies\PenilaianMonevPolicy;
-use App\Policies\KategoriAspirasiPolicy;
 
 use Illuminate\Support\ServiceProvider;
+use App\Policies\KategoriAspirasiPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -62,6 +64,7 @@ class AppServiceProvider extends ServiceProvider
         Arsip::class => ArsipPolicy::class,
         KategoriArsip::class => KategoriArsipPolicy::class,
         Comment::class => CommentPolicy::class,
+        Mention::class => MentionPolicy::class,
     ];
     /**
      * Register any application services.

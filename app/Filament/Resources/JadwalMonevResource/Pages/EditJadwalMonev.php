@@ -25,16 +25,4 @@ class EditJadwalMonev extends EditRecord
             Actions\RestoreAction::make(),
         ];
     }
-
-    protected function afterSave(): void
-    {
-        $users = $this->getRecord()->timMonev()->pluck('id_user');
-        foreach ($users as $user) {
-            Notification::make()
-                ->info()
-                ->title('Penugasan Jadwal Monev')
-                ->body("Anda telah ditugaskan sebagai tim monev dalam {$this->getRecord()->name} {$this->getRecord()->programKerja->name}")
-                ->sendToDatabase(User::find($user));
-        }
-    }
 }

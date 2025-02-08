@@ -53,7 +53,7 @@ class ArsipPolicy
      */
     public function restore(User $user, Arsip $arsip): bool
     {
-        return true;
+        return $user->role === "Admin";
     }
 
     /**
@@ -61,6 +61,6 @@ class ArsipPolicy
      */
     public function forceDelete(User $user, Arsip $arsip): bool
     {
-        return true;
+        return $user->role === "Admin";
     }
 }

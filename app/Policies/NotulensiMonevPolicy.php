@@ -37,7 +37,7 @@ class NotulensiMonevPolicy
      */
     public function update(User $user, NotulensiMonev $notulensiMonev): bool
     {
-        return true;
+        return in_array(str($user->id), $notulensiMonev->tim_monev) || in_array($user->role, ['Admin', 'Komisi 4']);
     }
 
     /**
@@ -45,7 +45,7 @@ class NotulensiMonevPolicy
      */
     public function delete(User $user, NotulensiMonev $notulensiMonev): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Komisi 4']);
     }
 
     /**
@@ -53,7 +53,7 @@ class NotulensiMonevPolicy
      */
     public function restore(User $user, NotulensiMonev $notulensiMonev): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Komisi 4']);
     }
 
     /**
@@ -61,6 +61,6 @@ class NotulensiMonevPolicy
      */
     public function forceDelete(User $user, NotulensiMonev $notulensiMonev): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Komisi 4']);
     }
 }

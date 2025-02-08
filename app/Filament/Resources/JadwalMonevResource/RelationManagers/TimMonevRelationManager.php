@@ -20,6 +20,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 class TimMonevRelationManager extends RelationManager
 {
     protected static string $relationship = 'timMonev';
+    protected $before;
 
     public function form(Form $form): Form
     {
@@ -70,6 +71,7 @@ class TimMonevRelationManager extends RelationManager
                     ->preloadRecordSelect()
                     ->attachAnother(false)
                     ->beforeFormValidated(function (Tables\Actions\AttachAction $action) {
+                        $this->before = $this->getOwnerRecord()->timMonev()->pluck('id_user');
                         $currentCount = $this->getOwnerRecord()->timMonev()->count();
                         $maxMembers = $this->getOwnerRecord()->jumlah_tim_monev;
                         if ($currentCount >= $maxMembers) {
@@ -121,7 +123,18 @@ class TimMonevRelationManager extends RelationManager
                                 return max(0, $maxMembers - $currentCount);
                             })
                             ->required(),
-                    ]),
+                    ])
+                    ->after(function () {
+                        $users = $this->getOwnerRecord()->timMonev()->pluck('id_user');
+                        $newUsers = $users->diff($this->before);
+                        foreach ($newUsers as $user) {
+                            Notification::make()
+                                ->success()
+                                ->title('Penugasan Jadwal Monev')
+                                ->body("Anda telah ditugaskan sebagai tim monev dalam {$this->getOwnerRecord()->name} {$this->getOwnerRecord()->programKerja()->first()->name}.")
+                                ->sendToDatabase(User::find($user));
+                        }
+                    }),
                 Tables\Actions\AttachAction::make('Tambah Pengganti')
                     ->label('Tambah Pengganti')
                     ->modelLabel('Fungsionaris')
@@ -129,6 +142,7 @@ class TimMonevRelationManager extends RelationManager
                     ->preloadRecordSelect()
                     ->attachAnother(false)
                     ->beforeFormValidated(function (Tables\Actions\AttachAction $action) {
+                        $this->before = $this->getOwnerRecord()->timMonev()->pluck('id_user');
                         $currentCount = $this->getOwnerRecord()->timMonev()->count();
                         $maxMembers = $this->getOwnerRecord()->jumlah_tim_monev;
                         if ($currentCount >= $maxMembers) {
@@ -180,11 +194,36 @@ class TimMonevRelationManager extends RelationManager
                                 return max(0, $maxMembers - $currentCount);
                             })
                             ->required(),
-                    ]),
+                    ])
+                    ->after(function () {
+                        $users = $this->getOwnerRecord()->timMonev()->pluck('id_user');
+                        $newUsers = $users->diff($this->before);
+                        foreach ($newUsers as $user) {
+                            Notification::make()
+                                ->success()
+                                ->title('Penugasan Jadwal Monev')
+                                ->body("Anda telah ditugaskan sebagai tim monev pengganti dalam {$this->getOwnerRecord()->name} {$this->getOwnerRecord()->programKerja()->first()->name}.")
+                                ->sendToDatabase(User::find($user));
+                        }
+                    }),
             ])
             ->actions([
                 Tables\Actions\DetachAction::make()
-                    ->label('Lepaskan'),
+                    ->label('Lepaskan')
+                    ->before(function () {
+                        $this->before = $this->getOwnerRecord()->timMonev()->pluck('id_user');
+                    })
+                    ->after(function () {
+                        $users = $this->getOwnerRecord()->timMonev()->pluck('id_user');
+                        $removedUsers = $this->before->diff($users);
+                        foreach ($removedUsers as $user) {
+                            Notification::make()
+                                ->danger()
+                                ->title('Pembebasan Jadwal Monev')
+                                ->body("Anda tidak lagi menjadi tim monev dalam {$this->getOwnerRecord()->name} {$this->getOwnerRecord()->programKerja()->first()->name}.")
+                                ->sendToDatabase(User::find($user));
+                        }
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

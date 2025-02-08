@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SuratResource\RelationManagers;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use App\Filament\Resources\SuratResource\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\SuratResource\RelationManagers\MentionsRelationManager;
 
 class SuratResource extends Resource
 {
@@ -167,6 +168,7 @@ class SuratResource extends Resource
     {
         return [
             CommentsRelationManager::class,
+            MentionsRelationManager::class,
         ];
     }
 

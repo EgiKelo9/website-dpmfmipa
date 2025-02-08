@@ -26,6 +26,7 @@ use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use App\Filament\Resources\UserResource\Widgets\JadwalMonevWidget;
 use App\Filament\Resources\UserResource\Widgets\ProgramKerjaWidget;
 use App\Filament\Resources\UserResource\Widgets\RingkasanWidget;
+use App\Filament\Resources\UserResource\Widgets\SuratWidget;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -49,7 +50,7 @@ class AdminPanelProvider extends PanelProvider
                     ->setNavigationLabel('Profil Saya')
                     ->setTitle('Profil Saya')
                     ->slug('profil-saya')
-                    ->setIcon('heroicon-o-user'),
+                    ->setIcon('heroicon-o-user')
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()
@@ -65,8 +66,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 RingkasanWidget::class,
-                ProgramKerjaWidget::class,
+                SuratWidget::class,
                 JadwalMonevWidget::class,
+                ProgramKerjaWidget::class,
             ])
             ->navigationGroups([
                 NavigationGroup::make()

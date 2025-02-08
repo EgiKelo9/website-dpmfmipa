@@ -45,7 +45,7 @@ class BlogPolicy
      */
     public function delete(User $user, Blog $blog): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 5']);
+        return in_array($user->role, ['Admin', 'Komisi 5']);
     }
 
     /**
@@ -53,7 +53,7 @@ class BlogPolicy
      */
     public function restore(User $user, Blog $blog): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 5']);
+        return in_array($user->role, ['Admin', 'Komisi 5']);
     }
 
     /**
@@ -61,6 +61,6 @@ class BlogPolicy
      */
     public function forceDelete(User $user, Blog $blog): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 5']);
+        return in_array($user->role, ['Admin', 'Komisi 5']);
     }
 }

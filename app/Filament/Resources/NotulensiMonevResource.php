@@ -46,8 +46,10 @@ class NotulensiMonevResource extends Resource
                                     ->options(function () {
                                         return JadwalMonev::query()
                                             ->where('notulen', 0)
+                                            ->where('tanggal', '<=', now()->format('Y-m-d'))
                                             ->with('programKerja')
-                                            ->whereHas('timMonev', fn($query) => $query->where('id_user', Auth::user()->id))
+                                            ->whereHas('timMonev', fn($query) => $query
+                                            ->where('id_user', Auth::user()->id))
                                             ->get()
                                             ->mapWithKeys(function ($jadwal) {
                                                 $label = "{$jadwal->name} {$jadwal->programKerja->name}";

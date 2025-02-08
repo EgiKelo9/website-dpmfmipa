@@ -126,7 +126,7 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\CheckboxColumn::make('diproses')
                     ->label('Diproses')
-                    ->disabled(fn ($record) => now()->lt(Carbon::parse($record->tanggal_upload)))
+                    ->disabled(fn($record) => now()->lt(Carbon::parse($record->tanggal_upload)))
                     ->afterStateUpdated(function ($record, $state) {
                         $record->update(['diproses' => $state]);
                         Notification::make()
@@ -153,9 +153,13 @@ class PostResource extends Resource
                 Tables\Filters\Filter::make('tanggal_upload')
                     ->form([
                         Forms\Components\DatePicker::make('tanggal')
+                            ->reactive()
                             ->native(false)
                             ->displayFormat('j F Y')
-                            ->placeholder('Pilih Tanggal Upload'),
+                            ->placeholder('Pilih Tanggal Upload')
+                            ->afterStateUpdated(function (Forms\Set $set) {
+                                $set('bulan', null);
+                            }),
                         Forms\Components\Select::make('bulan')
                             ->options([
                                 '01' => 'Januari',
@@ -170,17 +174,21 @@ class PostResource extends Resource
                                 '10' => 'Oktober',
                                 '11' => 'November',
                                 '12' => 'Desember',
-                            ]),
+                            ])
+                            ->reactive()
+                            ->afterStateUpdated(function (Forms\Set $set) {
+                                $set('tanggal', null);
+                            }),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['tanggal'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('tanggal_upload', '=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('tanggal_upload', '=', $date),
                             )
                             ->when(
                                 $data['bulan'],
-                                fn (Builder $query, $month): Builder => $query->whereMonth('tanggal_upload', '=', $month),
+                                fn(Builder $query, $month): Builder => $query->whereMonth('tanggal_upload', '=', $month),
                             );
                     }),
                 Tables\Filters\TrashedFilter::make(),

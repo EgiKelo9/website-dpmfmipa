@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Aspirasi;
+use App\Models\Mention;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class AspirasiPolicy
+class MentionPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class AspirasiPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Aspirasi $aspirasi): bool
+    public function view(User $user, Mention $mention): bool
     {
         return true;
     }
@@ -29,38 +29,38 @@ class AspirasiPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 3']);
+        return true;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Aspirasi $aspirasi): bool
+    public function update(User $user, Mention $mention): bool
     {
-        return in_array($user->role, ['Admin', 'Inti', 'Komisi 3']);
+        return $user->id === $mention->id_user || $user->role === 'Admin';
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Aspirasi $aspirasi): bool
+    public function delete(User $user, Mention $mention): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 3']);
+        return $user->id === $mention->id_user || $user->role === 'Admin';
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Aspirasi $aspirasi): bool
+    public function restore(User $user, Mention $mention): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 3']);
+        return $user->id === $mention->id_user || $user->role === 'Admin';
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Aspirasi $aspirasi): bool
+    public function forceDelete(User $user, Mention $mention): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 3']);
+        return $user->id === $mention->id_user || $user->role === 'Admin';
     }
 }

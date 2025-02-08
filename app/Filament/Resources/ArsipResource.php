@@ -15,6 +15,7 @@ use App\Filament\Resources\ArsipResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ArsipResource\RelationManagers;
 use App\Filament\Resources\ArsipResource\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\ArsipResource\RelationManagers\MentionsRelationManager;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class ArsipResource extends Resource
@@ -48,11 +49,12 @@ class ArsipResource extends Resource
                         ->default(Auth::user()->id),
                 ])->columnSpan(['md' => 1]),
                 Forms\Components\Section::make([
-                    Forms\Components\TextInput::make('link')
-                        ->url()
+                    Forms\Components\TextArea::make('link')
+                        // ->url()
                         ->label('Link Dokumen')
-                        ->prefixIcon('heroicon-o-link')
-                        ->placeholder('Masukkan Link Dokumen'),
+                        // ->prefixIcon('heroicon-o-link')
+                        ->placeholder('Masukkan Link Dokumen')
+                        ->rows(4),
                     Forms\Components\FileUpload::make('file')
                         ->disk('public')
                         ->directory('arsip-dokumen')
@@ -139,6 +141,7 @@ class ArsipResource extends Resource
     {
         return [
             CommentsRelationManager::class,
+            MentionsRelationManager::class,
         ];
     }
 

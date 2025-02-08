@@ -29,4 +29,8 @@ class Arsip extends Model
     {
         return $this->hasMany(Comment::class, 'id_arsip');
     }
+    public function mentions()
+    {
+        return $this->hasMany(Mention::class, 'id_arsip');
+    }
 }

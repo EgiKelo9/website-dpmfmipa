@@ -29,4 +29,8 @@ class Laporan extends Model
     {
         return $this->hasMany(Comment::class, 'id_laporan');
     }
+    public function mentions()
+    {
+        return $this->hasMany(Mention::class, 'id_laporan');
+    }
 }
