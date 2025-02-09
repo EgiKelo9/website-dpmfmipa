@@ -77,11 +77,10 @@ class PostResource extends Resource
                     ->url()
                     ->columnSpanFull()
                     ->prefixIcon('heroicon-o-link')
-                    ->label('Link Google Drive (Opsional)')
+                    ->label('Link Google Drive')
                     ->placeholder('Masukkan Link Google Drive'),
                 Forms\Components\FileUpload::make('photos')
                     ->multiple()
-                    ->required()
                     ->disk('public')
                     ->panelLayout('grid')
                     ->directory('feed-instagram')
@@ -140,15 +139,15 @@ class PostResource extends Resource
                 Tables\Filters\SelectFilter::make('category')
                     ->label('Kategori Feed')
                     ->options([
-                        'program kerja' => 'Program Kerja',
-                        'hari raya' => 'Hari Raya',
-                        'hotline' => 'Hotline',
-                        'opening bulan' => 'Opening Bulan',
-                        'tim monev' => 'Tim Monev',
-                        'repost' => 'Repost',
-                        'ucapan' => 'Ucapan',
-                        'laporan' => 'Laporan',
-                        'lainnya' => 'Lainnya',
+                        'Program Kerja' => 'Program Kerja',
+                        'Hari Raya' => 'Hari Raya',
+                        'Hotline' => 'Hotline',
+                        'Opening Bulan' => 'Opening Bulan',
+                        'Tim Monev' => 'Tim Monev',
+                        'Repost' => 'Repost',
+                        'Ucapan' => 'Ucapan',
+                        'Laporan' => 'Laporan',
+                        'Lainnya' => 'Lainnya',
                     ]),
                 Tables\Filters\Filter::make('tanggal_upload')
                     ->form([

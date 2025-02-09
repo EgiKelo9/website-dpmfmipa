@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\UserResource\Widgets\AspirasiChart;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -24,6 +25,7 @@ use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use App\Filament\Resources\UserResource\Widgets\JadwalMonevWidget;
+use App\Filament\Resources\UserResource\Widgets\PostChart;
 use App\Filament\Resources\UserResource\Widgets\ProgramKerjaWidget;
 use App\Filament\Resources\UserResource\Widgets\RingkasanWidget;
 use App\Filament\Resources\UserResource\Widgets\SuratWidget;
@@ -65,8 +67,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                RingkasanWidget::class,
                 SuratWidget::class,
+                RingkasanWidget::class,
+                AspirasiChart::class,
+                PostChart::class,
                 JadwalMonevWidget::class,
                 ProgramKerjaWidget::class,
             ])

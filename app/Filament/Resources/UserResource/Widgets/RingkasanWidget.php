@@ -25,7 +25,7 @@ class RingkasanWidget extends BaseWidget
                 $count = JadwalMonev::whereHas('timMonev', function ($query) use ($userId) {
                     $query->where('id_user', $userId)->where('hadir', 1);
                 })->count();
-                return "{$count} Kali";
+                return "{$count} Kegiatan";
             }),
             Stat::make('Persentase Keaktifan Monev', function () {
                 $userId = Auth::user()->id;

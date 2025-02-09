@@ -86,7 +86,12 @@ class MentionsRelationManager extends RelationManager
                             Notification::make()
                                 ->info()
                                 ->title('Sebutan Baru')
-                                ->body('Anda disebut pada surat ' . $this->getOwnerRecord()->title)
+                                ->body('Anda disebut pada surat: ' . $this->getOwnerRecord()->title)
+                                ->actions([
+                                    \Filament\Notifications\Actions\Action::make('view')
+                                        ->label('Lihat')
+                                        ->url(fn () => '/admin/daftar-surat/' . $this->getOwnerRecord()->id . '/edit?activeRelationManager=1')
+                                ])
                                 ->sendToDatabase(User::find($userId));
                         }
                     }),
@@ -104,7 +109,12 @@ class MentionsRelationManager extends RelationManager
                                 Notification::make()
                                     ->info()
                                     ->title('Sebutan Baru')
-                                    ->body('Anda disebut pada surat ' . $this->getOwnerRecord()->title)
+                                    ->body('Anda disebut pada surat: ' . $this->getOwnerRecord()->title)
+                                    ->actions([
+                                        \Filament\Notifications\Actions\Action::make('view')
+                                            ->label('Lihat')
+                                            ->url(fn () => '/admin/daftar-surat/' . $this->getOwnerRecord()->id . '/edit?activeRelationManager=1')
+                                    ])
                                     ->sendToDatabase(User::find($userId));
                             }
                         }),

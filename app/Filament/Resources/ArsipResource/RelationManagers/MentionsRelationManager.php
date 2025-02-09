@@ -61,11 +61,15 @@ class MentionsRelationManager extends RelationManager
                         return $usernames ?: '-';
                     }),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat pada')
+                    ->label('Dibuat Pada')
                     ->sortable()
                     ->formatStateUsing(function ($state) {
                         return \Carbon\Carbon::parse($state)->locale('id')->translatedFormat('j F Y, H:i');
                     }),
+                Tables\Columns\TextColumn::make('user.username')
+                    ->label('Disebut Oleh')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('notes')
                     ->html()
                     ->wrap()
@@ -86,7 +90,12 @@ class MentionsRelationManager extends RelationManager
                             Notification::make()
                                 ->info()
                                 ->title('Sebutan Baru')
-                                ->body('Anda disebut pada surat ' . $this->getOwnerRecord()->title)
+                                ->body('Anda disebut pada arsip: ' . $this->getOwnerRecord()->title)
+                                ->actions([
+                                    \Filament\Notifications\Actions\Action::make('view')
+                                        ->label('Lihat')
+                                        ->url(fn () => '/admin/arsip-dokumen/' . $this->getOwnerRecord()->id . '/edit?activeRelationManager=1')
+                                ])
                                 ->sendToDatabase(User::find($userId));
                         }
                     }),
@@ -104,11 +113,17 @@ class MentionsRelationManager extends RelationManager
                                 Notification::make()
                                     ->info()
                                     ->title('Sebutan Baru')
-                                    ->body('Anda disebut pada surat ' . $this->getOwnerRecord()->title)
+                                    ->body('Anda disebut pada arsip: ' . $this->getOwnerRecord()->title)
+                                    ->actions([
+                                        \Filament\Notifications\Actions\Action::make('view')
+                                            ->label('Lihat')
+                                            ->url(fn () => '/admin/arsip-dokumen/' . $this->getOwnerRecord()->id . '/edit?activeRelationManager=1')
+                                    ])
                                     ->sendToDatabase(User::find($userId));
                             }
                         }),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->recordTitle(fn($record) => 'Sebutan ' . $record->user->username),
                 ]),
             ]);
     }

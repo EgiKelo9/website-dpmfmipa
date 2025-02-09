@@ -19,7 +19,7 @@ return new class extends Migration
             $table->json('photos')->nullable();
             $table->text('link_drive')->nullable();
             $table->date('tanggal_upload');
-            $table->enum('category', ['program kerja', 'hari raya', 'hotline', 'opening bulan', 'tim monev', 'repost', 'ucapan', 'laporan', 'lainnya']);
+            $table->enum('category', ['Program Kerja', 'Hari Raya', 'Hotline', 'Opening Bulan', 'Tim Monev', 'Repost', 'Ucapan', 'Laporan', 'Lainnya']);
             $table->foreignIdFor(User::class, 'id_user')->constrained('users', 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('diproses')->default(false);
             $table->softDeletes();
