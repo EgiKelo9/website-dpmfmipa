@@ -11,6 +11,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 class ProgramKerjaWidget extends BaseWidget
 {
     protected int | string | array $columnSpan = 'full';
+    protected static ?string $heading = 'Program Kerja yang Anda Monev';
     public function table(Table $table): Table
     {
         return $table
@@ -24,22 +25,22 @@ class ProgramKerjaWidget extends BaseWidget
                     ->label('Nama Program Kerja')
                     ->sortable()
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('jumlah_panitia')
-                //     ->numeric()
-                //     ->label('Panitia')
-                //     ->suffix(' Orang'),
-                // Tables\Columns\TextColumn::make('jumlah_tim_monev')
-                //     ->numeric()
-                //     ->label('Tim Monev')
-                //     ->suffix(' Orang'),
+                Tables\Columns\TextColumn::make('jumlah_panitia')
+                    ->numeric()
+                    ->label('Panitia')
+                    ->suffix(' Orang'),
+                Tables\Columns\TextColumn::make('jumlah_tim_monev')
+                    ->numeric()
+                    ->label('Tim Monev')
+                    ->suffix(' Orang'),
                 Tables\Columns\TextColumn::make('lembaga.username')
                     ->label('Lembaga Mahasiswa')
                     ->sortable()
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('description')
-                //     ->label('Deskripsi Program Kerja')
-                //     ->limit(40)
-                //     ->html(),
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Deskripsi Program Kerja')
+                    ->limit(40)
+                    ->html(),
             ]);
     }
 }

@@ -38,6 +38,11 @@ class Post extends Model
                         ->title('Pengingat Feeds Instagram')
                         ->body("Hari ini adalah jadwal Anda untuk memproses feeds {$model->title}.")
                         ->warning()
+                        ->actions([
+                            \Filament\Notifications\Actions\Action::make('view')
+                                ->label('Proses Feeds')
+                                ->url(route('filament.admin.resources.feeds-instagram.index')),
+                        ])
                         ->sendToDatabase(User::find($model->id_user));
                 } elseif ($daysRemaining <= 2 && $daysRemaining >= 0) {
                     $daysRemaining++;

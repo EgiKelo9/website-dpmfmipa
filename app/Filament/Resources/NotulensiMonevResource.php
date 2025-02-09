@@ -165,6 +165,7 @@ class NotulensiMonevResource extends Resource
                                                     ->default('Kosong'),
                                                 Forms\Components\TextArea::make("descriptions.{$penilaian->id}")
                                                     ->required()
+                                                    ->rows(3)
                                                     ->columnSpan(['md' => 3])
                                                     ->label('Keterangan')
                                                     ->default('Belum ada penilaian yang ditambahkan.')

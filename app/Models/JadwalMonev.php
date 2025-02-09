@@ -47,6 +47,11 @@ class JadwalMonev extends Model
                             ->title('Pengingat Jadwal Monev')
                             ->body("Hari ini adalah jadwal monev Anda pada {$model->name} {$model->programKerja()->first()->name}.")
                             ->warning()
+                            ->actions([
+                                \Filament\Notifications\Actions\Action::make('view')
+                                    ->label('Mulai Monev')
+                                    ->url(route('filament.admin.resources.notulensi-monev.create')),
+                            ])
                             ->sendToDatabase(User::find($id));
                     } elseif (($daysRemaining == 6 || $daysRemaining <= 2) && $daysRemaining >= 0) {
                         $daysRemaining++;

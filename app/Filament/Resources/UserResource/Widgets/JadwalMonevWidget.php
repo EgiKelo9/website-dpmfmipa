@@ -11,6 +11,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 class JadwalMonevWidget extends BaseWidget
 {
     protected int | string | array $columnSpan = 'full';
+    protected static ?string $heading = 'Jadwal Monev Mendatang';
     public function table(Table $table): Table
     {
         return $table
@@ -28,10 +29,10 @@ class JadwalMonevWidget extends BaseWidget
                     ->sortable()
                     ->wrap()
                     ->label('Nama Program Kerja'),
-                // Tables\Columns\TextColumn::make('jumlah_tim_monev')
-                //     ->numeric()
-                //     ->label('Tim Monev')
-                //     ->suffix(' Orang'),
+                Tables\Columns\TextColumn::make('jumlah_tim_monev')
+                    ->numeric()
+                    ->label('Tim Monev')
+                    ->suffix(' Orang'),
                 Tables\Columns\TextColumn::make('tanggal')
                     ->date()
                     ->sortable()
