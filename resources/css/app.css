@@ -8,7 +8,7 @@
 }
 
 .navbar-nav {
-    @apply hidden xl:flex;
+    @apply hidden md:flex;
 }
 
 .navbar {
