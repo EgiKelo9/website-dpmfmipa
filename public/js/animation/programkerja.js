@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const elements = document.querySelectorAll(".animate-fade-in");
 
     const observer = new IntersectionObserver((entries) => {
@@ -15,34 +15,30 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Tambahkan kode ini ke file JavaScript Anda
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const menuButton = document.querySelectorAll('.menu-button');
     let isOpen = false;
 
-    // Toggle dropdown saat tombol menu diklik
     menuButton.forEach(menubtn => {
         const dropdownMenu = menubtn.nextElementSibling;
-        menubtn.addEventListener('click', function(e) {
+        menubtn.addEventListener('click', function (e) {
             e.stopPropagation();
             isOpen = !isOpen;
 
-            dropdownMenu.classList.toggle('hidden');
             if (isOpen) {
-                // Tampilkan dropdown
-                // Tambahkan animasi
-                dropdownMenu.classList.add('transform', 'opacity-100', 'scale-100');
-                dropdownMenu.classList.remove('opacity-0', 'scale-95');
-                // Update ARIA
+                dropdownMenu.classList.remove('h-0');
+                dropdownMenu.classList.add('h-[800px]');
+
                 menubtn.setAttribute('aria-expanded', 'true');
             } else {
-                // Sembunyikan dropdown
-                closeDropdown();
+                dropdownMenu.classList.remove('h-[800px]');
+                dropdownMenu.classList.add('h-0');
             }
         });
     })
 
     // Tutup dropdown saat mengklik di luar
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         if (isOpen && !dropdownMenu.contains(e.target)) {
             closeDropdown();
         }
@@ -51,138 +47,196 @@ document.addEventListener('DOMContentLoaded', function() {
     // Tutup dropdown saat item menu diklik
     const menuItems = dropdownMenu.querySelectorAll('[role="menuitem"]');
     menuItems.forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function () {
             closeDropdown();
         });
     });
 
-    // Fungsi untuk menutup dropdown
     function closeDropdown() {
         isOpen = false;
         // Tambahkan animasi keluar
         dropdownMenu.classList.remove('opacity-100', 'scale-100');
         dropdownMenu.classList.add('opacity-0', 'scale-95');
-        // Sembunyikan setelah animasi selesai
-        setTimeout(() => {
-            dropdownMenu.classList.add('hidden');
-        }, 100);
-        // Update ARIA
         menuButton.setAttribute('aria-expanded', 'false');
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Get all carousels on the page
-    const carousels = document.querySelectorAll('[data-carousel="slide"]');
+document.addEventListener('DOMContentLoaded', function () {
+    // Dapatkan semua section yang memiliki tab
+    const sections = document.querySelectorAll('.flex.flex-col.items-center');
 
-    // Initialize each carousel
-    carousels.forEach((carousel, carouselIndex) => {
-        // Add unique ID to each carousel
-        carousel.id = `carousel-${carouselIndex}`;
+    sections.forEach((section, sectionIndex) => {
+        // Buat ID unik untuk setiap section
+        const sectionId = `section-${sectionIndex + 1}`;
 
-        const carouselItems = carousel.querySelectorAll('[data-carousel-item]');
-        const prevButton = carousel.querySelector('[data-carousel-prev]');
-        const nextButton = carousel.querySelector('[data-carousel-next]');
-        const indicators = carousel.querySelectorAll('[data-carousel-slide-to]');
+        // Dapatkan tab dan content dalam section ini
+        const tabs = section.querySelectorAll('.tab-link');
+        const contents = section.querySelectorAll('.tab-content');
 
-        let currentSlide = 0;
-        const totalSlides = carouselItems.length;
-
-        // Initialize the carousel
-        function initCarousel() {
-            carouselItems.forEach((item, index) => {
-                if (index === 0) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-            updateIndicators();
-        }
-
-        // Update indicators
-        function updateIndicators() {
-            indicators.forEach((indicator, index) => {
-                if (index === currentSlide) {
-                    indicator.setAttribute('aria-current', 'true');
-                    indicator.classList.add('bg-gray-800');
-                } else {
-                    indicator.setAttribute('aria-current', 'false');
-                    indicator.classList.remove('bg-gray-800');
-                }
-            });
-        }
-
-        // Show specific slide
-        function showSlide(index) {
-            // Add fade out effect
-            carouselItems[currentSlide].classList.add('opacity-0');
-            setTimeout(() => {
-                carouselItems[currentSlide].classList.add('hidden');
-
-                // Update current slide index
-                currentSlide = index;
-
-                // Show new slide with fade in effect
-                carouselItems[currentSlide].classList.remove('hidden');
-                setTimeout(() => {
-                    carouselItems[currentSlide].classList.remove('opacity-0');
-                }, 50);
-
-                // Update indicators
-                updateIndicators();
-            }, 300);
-        }
-
-        // Previous slide function
-        function previousSlide() {
-            const newIndex = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
-            showSlide(newIndex);
-        }
-
-        // Next slide function
-        function nextSlide() {
-            const newIndex = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
-            showSlide(newIndex);
-        }
-
-        // Add click events
-        prevButton.addEventListener('click', previousSlide);
-        nextButton.addEventListener('click', nextSlide);
-
-        // Add indicator clicks
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => showSlide(index));
+        // Update ID dan data-tab untuk menghindari konflik
+        contents.forEach((content, contentIndex) => {
+            const newId = `${sectionId}-tab-${contentIndex + 1}`;
+            content.id = newId;
+            tabs[contentIndex].setAttribute('data-tab', newId);
         });
 
-        // Add keyboard navigation when focused
-        carousel.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                previousSlide();
-            } else if (e.key === 'ArrowRight') {
-                nextSlide();
+        // Tambahkan event listener untuk setiap tab dalam section
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Reset semua tab dalam section ini saja
+                tabs.forEach(t => {
+                    t.classList.remove('text-black', 'active');
+                    t.classList.add('text-slate-400');
+                });
+
+                // Aktifkan tab yang diklik
+                this.classList.add('text-black', 'active');
+                this.classList.remove('text-slate-400');
+
+                // Sembunyikan semua content dalam section ini
+                contents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                // Tampilkan content yang sesuai
+                const targetId = this.getAttribute('data-tab');
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    targetContent.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Aktifkan tab pertama untuk setiap section
+        if (tabs.length > 0) {
+            tabs[0].click();
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Get all tab sections
+    const sections = document.querySelectorAll('.flex.flex-col.items-center');
+
+    // Initialize each section
+    sections.forEach((section, sectionIndex) => {
+        const tabLinks = section.querySelectorAll('.tab-link');
+        const tabContents = section.querySelectorAll('.tab-content');
+        let isAnimating = false;
+
+        // Add unique IDs to tab contents in this section
+        tabLinks.forEach((link, tabIndex) => {
+            const newId = `section${sectionIndex + 1}-tab${tabIndex + 1}`;
+            link.setAttribute('data-tab', newId);
+            if (tabContents[tabIndex]) {
+                tabContents[tabIndex].id = newId;
             }
         });
 
-        // Auto-play functionality
-        let autoplayInterval;
+        function fadeOut(element, duration) {
+            return new Promise(resolve => {
+                let opacity = 1;
+                const interval = 10;
+                const step = interval / duration;
 
-        function startAutoplay() {
-            autoplayInterval = setInterval(nextSlide, 5000);
+                const fadeOutInterval = setInterval(() => {
+                    opacity -= step;
+
+                    if (opacity <= 0) {
+                        opacity = 0;
+                        element.style.opacity = '0';
+                        element.classList.add('hidden');
+                        clearInterval(fadeOutInterval);
+                        resolve();
+                    } else {
+                        element.style.opacity = opacity.toString();
+                    }
+                }, interval);
+            });
         }
 
-        function stopAutoplay() {
-            clearInterval(autoplayInterval);
+        function fadeIn(element, duration) {
+            return new Promise(resolve => {
+                let opacity = 0;
+                const interval = 10;
+                const step = interval / duration;
+
+                element.classList.remove('hidden');
+                element.style.opacity = '0';
+
+                const fadeInInterval = setInterval(() => {
+                    opacity += step;
+
+                    if (opacity >= 1) {
+                        opacity = 1;
+                        element.style.opacity = '1';
+                        clearInterval(fadeInInterval);
+                        resolve();
+                    } else {
+                        element.style.opacity = opacity.toString();
+                    }
+                }, interval);
+            });
         }
 
-        // Start autoplay
-        startAutoplay();
+        async function switchTab(e) {
+            e.preventDefault();
 
-        // Pause on hover
-        carousel.addEventListener('mouseenter', stopAutoplay);
-        carousel.addEventListener('mouseleave', startAutoplay);
+            if (isAnimating) return;
+            isAnimating = true;
 
-        // Initialize
-        initCarousel();
+            // Remove active states from all tabs in this section only
+            tabLinks.forEach(link => {
+                link.classList.remove('text-black');
+                link.classList.add('text-slate-400');
+            });
+
+            // Add active state to clicked tab
+            this.classList.remove('text-slate-400');
+            this.classList.add('text-black');
+
+            // Get the target tab content
+            const tabId = this.getAttribute('data-tab');
+            const targetContent = document.getElementById(tabId);
+
+            // Find currently active content in this section only
+            const activeContent = Array.from(tabContents).find(
+                content => !content.classList.contains('hidden')
+            );
+
+            if (activeContent) {
+                await fadeOut(activeContent, 300);
+            }
+
+            if (targetContent) {
+                await fadeIn(targetContent, 300);
+            }
+
+            isAnimating = false;
+        }
+
+        // Add click event listeners to all tabs in this section
+        tabLinks.forEach(link => {
+            link.addEventListener('click', switchTab);
+        });
+
+        // Set initial active tab for this section
+        if (tabLinks.length > 0) {
+            tabLinks[0].click();
+        }
+    });
+
+    // Add scroll animation observer
+    const animatedSections = document.querySelectorAll('.animate-fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-show');
+            }
+        });
+    });
+
+    animatedSections.forEach(section => {
+        observer.observe(section);
     });
 });
