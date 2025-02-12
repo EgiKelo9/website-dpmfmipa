@@ -1,170 +1,89 @@
-@extends('layouts.user')
-
-@section('title')
-    Aspirasi
-@endsection
-{{-- BELOM NYAMBUNG DATABASENYA --}}
-{{-- BELOM NYAMBUNG DATABASENYA --}}
-{{-- BELOM NYAMBUNG DATABASENYA --}}
-{{-- BELOM NYAMBUNG DATABASENYA --}}
-@section('content')
-    <style>
-        .animate-fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .animate-show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-
-    <div class="relative font-poppins">
-        <img src="{{ asset('images/IMG_5584 2.png') }}" alt="" class="w-full h-[750px] object-cover">
-        <div class="bg-gradient-to-t from-white to-transparent absolute top-0 left-0 w-full h-full">
-            <div class="flex xl:flex-row flex-col items-center justify-center gap-9 mt-28">
-                <img src="{{ asset('images/LOGO DPM.png') }}" alt=""
-                    class="xl:w-[350px] xl:h-[350px] w-[250px] h-[250px]">
-                <div class="xl:flex flex-col gap-3 hidden">
-                    <h1 class="text-3xl font-bold text-white">DEWAN PERWAKILAN MAHASISWA</h1>
-                    <h1 class="text-3xl font-bold text-white">FAKULTAS MATEMATIKA DAN ILMU PENGETAHUAN ALAM</h1>
-                    <h1 class="text-3xl font-bold text-white">UNIVERSITAS UDAYANA</h1>
+<x-layouts.user>
+    <x-slot:title>Aspirasi</x-slot>
+    <div class="font-[Poppins]">
+        <div class="relative font-poppins min-h-[450px] sm:min-h-[500px] lg:min-h-[600px]">
+            <img src="{{ asset('images/background-jumdek.png') }}" alt="" class="w-full object-cover min-h-screen">
+            <div class="absolute top-0 left-0 w-full min-h-screen">
+                <div class="container mx-auto content-center flex md:flex-row flex-col items-center justify-center gap-6 lg:gap-12 px-12 min-h-screen">
+                    <div class="flex flex-col gap-2 md:gap-3 xl:gap-4">
+                        <h1
+                            class="text-wrap text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-center font-bold text-white">
+                            AYO BERSATU UNTUK ASPIRASI</h1>
+                        <p
+                            class="text-wrap text-sm sm:text-base lg:text-lg xl:text-xl text-center font-light text-white">
+                            Saatnya kita, sebagai mahasiswa, bergerak dan menyuarakan aspirasi kita untuk masa depan yang gemilang bagi FMIPA dan Udayana. Dengan bersatu dan bergerak bersama, suara kita akan menjadi kekuatan yang mampu mendorong perubahan positif untuk menciptakan lingkungan akademik yang lebih baik dan prestasi yang membanggakan. Melalui semangat kebersamaan dan tekad yang kuat, kita dapat mewujudkan visi FMIPA dan Udayana sebagai institusi pendidikan yang unggul dan berdaya saing di tingkat nasional maupun internasional.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="animate-fade-in">
-        <form class="formulir xl:px-28 px-8 xl:py-10 py-5 flex flex-col gap-5">
-            <h1 class="text-blue-800 font-bold text-3xl">ADA ASPIRASI YANG INGIN DISAMPAIKAN?</h1>
-            <div class="h-1.5 bg-slate-300 rounded-full "></div>
-            <div class="mt-3 flex xl:flex-row flex-col justify-between w-full gap-8">
-                <div class="flex flex-1 flex-col gap-5">
-                    <label class="text-blue-800 font-bold text-2xl ">PROGRAM STUDI</label>
-                    <select name="prodi" class="block px-3 py-2 border rounded border-blue-500 text-slate-800">
-                        <option value="" disabled selected>Pilih Program Studi</option>
-                        <option value="Fisika">Fisika</option>
-                        <option value="Kimia">Kimia</option>
-                        <option value="Biologi">Biologi</option>
-                        <option value="Matematika">Matematika</option>
-                        <option value="Farmasi">Farmasi</option>
-                        <option value="Informatika">Informatika</option>
-                    </select>
-                    @error('prodi')
+        <div class="animate-fade-in">
+            <form action="{{ route('aspirasi.store') }}" method="POST" enctype="multipart/form-data"
+                class="formulir px-8 sm:px-12 lg:px-24 mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 flex flex-col gap-4">
+                @csrf
+                <h1 class="text-blue-900 font-bold text-xl sm:text-2xl lg:text-3xl">ADA ASPIRASI YANG INGIN DISAMPAIKAN?</h1>
+                <div class="h-0.5 lg:h-1 bg-slate-300 rounded-full"></div>
+                <div class="sm:mt-1 lg:mt-2 flex md:flex-row flex-col justify-between w-full gap-4 sm:gap-6 lg:gap-8">
+                    <div class="flex flex-1 flex-col gap-2 lg:gap-4">
+                        <label class="text-blue-900 font-bold text-base sm:text-xl lg:text-2xl">PROGRAM STUDI*</label>
+                        <select name="prodi" class="block px-3 py-2 border rounded border-blue-800 focus:border-blue-900 text-slate-800 text-sm md:text-base">
+                            <option value="" disabled selected>Pilih Program Studi</option>
+                            <option value="Kimia">Program Studi Kimia</option>
+                            <option value="Fisika">Program Studi Fisika</option>
+                            <option value="Biologi">Program Studi Biologi</option>
+                            <option value="Matematika">Program Studi Matematika</option>
+                            <option value="Farmasi">Program Studi Farmasi</option>
+                            <option value="Informatika">Program Studi Informatika</option>
+                        </select>
+                        @error('prodi')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="flex flex-1 flex-col gap-2 lg:gap-4">
+                        <label class="text-blue-900 font-bold text-base sm:text-xl lg:text-2xl">KATEGORI*</label>
+                        <select name="kategori" class="block px-3 py-2 border rounded border-blue-800 focus:border-blue-900 text-slate-800 text-sm md:text-base">
+                            <option value="" disabled selected>Pilih Kategori</option>
+                            <option value="Akademik">Kategori Akademik</option>
+                            <option value="Kemahasiswaan">Kategori Kemahasiswaan</option>
+                            <option value="Administrasi">Kategori Administrasi</option>
+                            <option value="Fasilitas">Kategori Fasilitas</option>
+                            <option value="Informasi">Kategori Informasi</option>
+                            <option value="Lembaga Mahasiswa">Kategori Lembaga Mahasiswa</option>
+                        </select>
+                        @error('kategori')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2 lg:gap-4 mt-3">
+                    <label class="text-blue-900 font-bold text-base sm:text-xl lg:text-2xl">DESKRIPSI*</label>
+                    <div id="editor" class="h-96" name="deskripsi"></div>
+                </div>
+                <div class="flex flex-col gap-2 lg:gap-4 mt-3">
+                    <label class="text-blue-900 font-bold text-base sm:text-xl lg:text-2xl">FOTO PENDUKUNG</label>
+                    <input type="file" name="dokumentasi" accept="image/*" multiple
+                        class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded 
+                        file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700
+                        hover:file:bg-blue-100 border border-blue-800 rounded p-1 sm:p-2"/>
+                    <p class="text-xs md:text-sm text-slate-500">Format yang diterima: JPG, JPEG, PNG, WEBP.</p>
+                    @error('images.*')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="flex flex-1 flex-col gap-5">
-                    <label class="text-blue-800 font-bold text-2xl">KATEGORI</label>
-                    <select name="kategori"class="block px-3 py-2 border rounded border-blue-500 text-slate-800">
-                        <option value="" disabled selected>Pilih Kategori</option>
-                        <option value="Akademik">Kategori Akademik</option>
-                        <option value="Kemahasiswaan">Kategori Kemahasiswaan</option>
-                        <option value="Administrasi">Kategori Administrasi</option>
-                        <option value="Fasilitas">Kategori Fasilitas</option>
-                        <option value="LembagaMahasiswa">Kategori Lembaga Mahasiswa</option>
-                    </select>
-                    @error('kategori')
-                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                    @enderror
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="konfirm w-full md:w-auto bg-blue-800 text-white hover:bg-blue-900 mb-10 font-semibold text-xl px-20 py-2 rounded">
+                        KIRIM
+                    </button>
                 </div>
-            </div>
-            <div class="flex flex-col gap-5 mt-3">
-                <label class="text-blue-800 font-bold text-2xl">DESKRIPSI</label>
-                <div id="editor" class="h-96">
-                </div>
-            </div>
-            <div class="flex justify-end">
-                <button
-                    class="konfirm w-full xl:w-auto bg-blue-800 text-white hover:bg-blue-900 mb-10 font-semibold text-xl px-20 py-2 rounded">KIRIM</button>
-            </div>
-            <h1 class="text-center text-sm text-slate-800">
-                Ingin memberikan aspirasi selengkapnya?
-                <button class=" bg-blue-800 rounded px-1">
-                    <a href="https://forms.gle/oeyx2ff2Xnet85U9A" class="text-white font-semibold">Klik disini!</a>
-                </button>
-            </h1>
-        </form>
+                <h1 class="text-center text-sm md:text-base text-slate-800 mb-4 md:mb-6 leading-8 sm:leading-normal">
+                    Ingin memberikan aspirasi selengkapnya?
+                    <button class=" bg-blue-800 rounded px-2">
+                        <a href="https://forms.gle/oeyx2ff2Xnet85U9A" class="text-white font-semibold">Klik disini!</a>
+                    </button>
+                </h1>
+            </form>
+        </div>
     </div>
-@endsection
-
-@section('script')
-    <script>
-        const {
-            ClassicEditor,
-            Essentials,
-            Bold,
-            Italic,
-            Underline,
-            Font,
-            Paragraph,
-            List,
-            ListProperties,
-            Alignment
-        } = CKEDITOR;
-
-        ClassicEditor
-            .create(document.querySelector('#editor'), {
-                plugins: [Essentials, Bold, Italic, Underline, Font, Paragraph, List, ListProperties, Alignment],
-                toolbar: [
-                    'undo', 'redo', '|', 'bold', 'italic', 'underline', '|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
-                    'alignment', '|', 'indent', 'outdent', '|',
-                    'numberedList', 'bulletedList'
-                ],
-                list: {
-                    properties: {
-                        styles: true,
-                        startIndex: true,
-                        reversed: true
-                    }
-                }
-            })
-            .then( /* ... */ )
-            .catch( /* ... */ );
-    </script>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        const formulir = document.querySelector('.formulir');
-        formulir.addEventListener('submit', (e) => {
-            e.preventDefault();
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, send it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: "Sent!",
-                        text: "Your aspiration has been sent.",
-                        icon: "success"
-                    });
-                }
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const elements = document.querySelectorAll(".animate-fade-in");
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("animate-show");
-                    }
-                });
-            }, {
-                threshold: 0.2
-            });
-
-            elements.forEach(el => observer.observe(el));
-        });
-    </script>
-@endsection
+    <script src="{{ asset('js/animation/aspirasi.js') }}"></script>
+</x-layouts.user>
