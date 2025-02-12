@@ -8,7 +8,7 @@ use App\Http\Controllers\DownloadController;
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/fungsionaris', 'fungsio')->name('fungsionaris');
-    Route::get('/program-kerja', 'proker');
+    Route::get('/program-kerja', 'proker')->name('proker');
 });
 
 Route::controller(AspirasiController::class)->group(function () {
