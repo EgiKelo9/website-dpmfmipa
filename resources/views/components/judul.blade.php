@@ -21,11 +21,12 @@
                     </button>
                     <div class="origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden overflow-hidden h-0 transition-all duration-300"
                         role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                        <div class="overflow-y-auto max-h-[800px] scrollbar-hide p-11">
+                        <div class="overflow-y-auto max-h-[800px] [&::-webkit-scrollbar]:hidden sm:p-11 p-6">
                             <div class="" role="none">
                                 <img src="{{ asset('images/gedung.jpg') }}" class="max-h-96 w-full object-cover">
                             </div>
-                            <p class="mt-5 text-slate-500 text-justify">Lorem ipsum dolor sit amet consectetur
+                            <p class="mt-5 text-slate-500 text-justify text-[12px] sm:text-[16px]">Lorem ipsum dolor sit
+                                amet consectetur
                                 adipisicing elit. Labore ipsa
                                 doloremque iusto, possimus omnis saepe vero voluptates a, odit similique quas itaque
                                 mollitia est atque facere
@@ -41,7 +42,7 @@
                                 consectetur adipisicing
                                 elit. Laborum dolores placeat libero ex voluptatum?
                             </p>
-                            <p class="mt-2 text-slate-500 text-justify">
+                            <p class="mt-2 text-slate-500 text-justify text-[12px] sm:text-[16px]">
                                 culpa, ex omnis quaerat maiores doloribus porro, aut asperiores mollitia, non sed quas
                                 quam consequuntur. Lorem
                                 ipsum dolor sit amet consectetur adipisicing elit. Ipsa placeat ad amet modi nesciunt,
@@ -50,7 +51,8 @@
                                 necessitatibus! Lorem
                                 ipsum dolor sit amet consectetur adipisicing elit.
                             </p>
-                            <p class="mt-2 text-slate-500 text-justify"> Molestiae minima temporibus odio expedita sint
+                            <p class="mt-2 text-slate-500 text-justify text-[12px] sm:text-[16px]"> Molestiae minima
+                                temporibus odio expedita sint
                                 explicabo molestias
                                 laudantium ea, adipisci nesciunt tempore, dolor quae assumenda ab perferendis magni nemo
                                 obcaecati dicta. Lorem
@@ -67,25 +69,24 @@
                                 obcaecati inventore, ipsum maxime molestias temporibus, voluptas quasi blanditiis totam
                                 repellat! Qui?
                             </p>
-                            <h2 class="font-bold text-sky-900 text-[26px]">Dokumentasi</h2>
+                            <h2 class="font-bold text-sky-900 text-[16px] sm:text-[26px]">Dokumentasi</h2>
                             <div class="relative">
                                 <div
                                     class="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white via-white/50 to-transparent pointer-events-none">
                                 </div>
                                 <div
-                                    class="mt-2 flex gap-4 overflow-x-auto p-2 snap-x snap-mandatory scroll-smooth
+                                    class="mt-2 flex gap-4 overflow-x-auto p-1 sm:p-2 snap-x snap-mandatory scroll-smooth
                                             [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                                     <img src="{{ asset('images/gedung.jpg') }}"
-                                        class="h-36 md:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
+                                        class="h-28 sm:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
                                     <img src="{{ asset('images/gedung.jpg') }}"
-                                        class="h-36 md:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
+                                        class="h-28 sm:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
                                     <img src="{{ asset('images/gedung.jpg') }}"
-                                        class="h-36 md:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
+                                        class="h-28 sm:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
                                     <img src="{{ asset('images/gedung.jpg') }}"
-                                        class="h-36 md:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
+                                        class="h-28 sm:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
