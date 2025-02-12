@@ -1,7 +1,7 @@
 <div class="container mx-auto p-8">
     <div class="flex gap-12 snap-x w-full overflow-x-auto">
         <div
-            class="flex flex-col mx-auto justify-center bg-blue-500 border border-gray-200 rounded-lg shadow-sm md:flex-row hover:bg-blue-900 dark:border-blue-900 text-blue-200 dark:hover:bg-blue-900 w-[900px]">
+            class="flex flex-col mx-auto justify-center bg-blue-800 border border-gray-200 rounded-lg shadow-sm md:flex-row hover:bg-blue-900 dark:border-blue-900 text-blue-200 dark:hover:bg-blue-900 w-[900px]">
             <div class="flex flex-col p-4 leading-normal">
                 <h5 class=" mt-6 mb-2 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
                     Rapat
@@ -75,8 +75,7 @@
                                     class="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white via-white/50 to-transparent pointer-events-none">
                                 </div>
                                 <div
-                                    class="mt-2 flex gap-4 overflow-x-auto p-1 sm:p-2 snap-x snap-mandatory scroll-smooth
-                                            [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                                    class="mt-2 flex gap-4 overflow-x-auto p-1 sm:p-2 snap-x snap-mandatory scroll-smooth">
                                     <img src="{{ asset('images/gedung.jpg') }}"
                                         class="h-28 sm:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
                                     <img src="{{ asset('images/gedung.jpg') }}"

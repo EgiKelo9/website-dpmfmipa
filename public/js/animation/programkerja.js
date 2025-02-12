@@ -3,15 +3,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            // entry.target.classList.toggle("animate-show", entry.isIntersecting);
             if (entry.isIntersecting) {
                 entry.target.classList.add("animate-show");
+            } else {
+                entry.target.classList.remove("animate-show");
             }
         });
     }, {
         threshold: 0.2
     });
 
-    elements.forEach(el => observer.observe(el));
+    const hiddenElements = document.querySelectorAll(".animate-fade-in.hidden");
+    hiddenElements.forEach(el => observer.observe(el));
+    // elements.forEach(el => observer.observe(el));
 });
 
 // Tambahkan kode ini ke file JavaScript Anda
@@ -26,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             isOpen = !isOpen;
 
             if (isOpen) {
+
                 dropdownMenu.classList.remove('h-0');
                 dropdownMenu.classList.add('h-[800px]');
 

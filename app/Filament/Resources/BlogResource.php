@@ -34,6 +34,12 @@ class BlogResource extends Resource
                     ->maxLength(255)
                     ->placeholder('Masukkan Judul Blog')
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('subtitle')
+                    ->label('Subjudul Blog')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder('Masukkan Subjudul Blog')
+                    ->columnSpanFull(),
                 Forms\Components\RichEditor::make('description')
                     ->label('Konten Blog')
                     ->required()
@@ -79,8 +85,8 @@ class BlogResource extends Resource
                     ->sortable()
                     ->wrap()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->label('Deskripsi Blog')
+                Tables\Columns\TextColumn::make('subtitle')
+                    ->label('Subjudul Blog')
                     ->limit(50)
                     ->html()
                     ->searchable()
