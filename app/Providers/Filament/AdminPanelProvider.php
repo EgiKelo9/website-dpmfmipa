@@ -58,7 +58,7 @@ class AdminPanelProvider extends PanelProvider
                 'profile' => MenuItem::make()
                     ->icon('heroicon-s-user-circle')
                     ->label(fn (): string => Auth::user()->username)
-                    ->url(fn (): string => EditProfilePage::getUrl())
+                    ->url(fn (): string => route('filament.admin.resources.daftar-fungsionaris.edit', ['record' => Auth::user()->id]))
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

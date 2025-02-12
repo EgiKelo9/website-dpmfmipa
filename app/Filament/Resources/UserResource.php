@@ -22,7 +22,7 @@ class UserResource extends Resource
     protected static ?string $label = 'Daftar Fungsionaris';
     protected static ?string $navigationGroup = 'Kelola Individu';
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $slug = 'daftar-pengguna';
+    protected static ?string $slug = 'daftar-fungsionaris';
 
     public static function form(Form $form): Form
     {
@@ -69,7 +69,8 @@ class UserResource extends Resource
                             'Komisi 4' => 'Komisi 4',
                             'Komisi 5' => 'Komisi 5',
                         ])
-                        ->visibleOn(['create', 'edit']),
+                        ->visibleOn(['create', 'edit'])
+                        ->visible(fn () => Auth::user()->role === 'Admin'),
                     Forms\Components\Select::make('isPimpinan')
                         ->required()
                         ->label('Status')
@@ -77,12 +78,14 @@ class UserResource extends Resource
                             true => 'Pimpinan',
                             false => 'Non Pimpinan',
                         ])
-                        ->visibleOn(['create', 'edit']),
+                        ->visibleOn(['create', 'edit'])
+                        ->visible(fn () => Auth::user()->role === 'Admin'),
                     Forms\Components\TextInput::make('specifiedRole')
                         ->required()
                         ->maxLength(50)
                         ->label('Jabatan')
-                        ->placeholder('Masukkan Jabatan Pengguna'),
+                        ->placeholder('Masukkan Jabatan Pengguna')
+                        ->disabled(fn () => Auth::user()->role !== 'Admin'),
                     Forms\Components\Select::make('id_prodi')
                         ->required()
                         ->label('Program Studi')
@@ -160,11 +163,11 @@ class UserResource extends Resource
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->successRedirectUrl(route('filament.admin.resources.daftar-pengguna.index')),
+                        ->successRedirectUrl(route('filament.admin.resources.daftar-fungsionaris.index')),
                     Tables\Actions\RestoreAction::make()
-                        ->successRedirectUrl(route('filament.admin.resources.daftar-pengguna.index')),
+                        ->successRedirectUrl(route('filament.admin.resources.daftar-fungsionaris.index')),
                     Tables\Actions\ForceDeleteAction::make()
-                        ->successRedirectUrl(route('filament.admin.resources.daftar-pengguna.index')),
+                        ->successRedirectUrl(route('filament.admin.resources.daftar-fungsionaris.index')),
                 ])->visible(fn () => Auth::user()->role === 'Admin'),
             ])
             ->bulkActions([

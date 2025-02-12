@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('aspirasis', function (Blueprint $table) {
             $table->id();
             $table->text('description');
-            $table->json('photos')->nullable();
+            $table->text('photos')->nullable();
             $table->foreignIdFor(ProgramStudi::class, 'id_prodi')->constrained('program_studis', 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(KategoriAspirasi::class, 'id_kategori')->constrained('kategori_aspirasis', 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->softDeletes();

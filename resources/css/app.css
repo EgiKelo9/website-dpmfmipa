@@ -12,7 +12,7 @@
 }
 
 .navbar {
-    @apply bg-[#F6F6F6];
+    @apply bg-transparent;
 }
 
 .navbar-nav.show {
@@ -25,7 +25,23 @@
 }
 
 .linkActive {
-    @apply text-blue-800;
+    @apply text-blue-900;
+}
+
+.textSlate {
+    @apply text-white;
+}
+
+.textSlate.scrolled {
+    @apply text-slate-800;
+}
+
+.textBlue {
+    @apply text-white;
+}
+
+.textBlue.scrolled {
+    @apply text-blue-900;
 }
 
 .footer {
@@ -39,5 +55,16 @@
 }
 
 .ck {
-    --ck-color-base-border: #2b7fff;
+    --ck-color-base-border: #1e3b8a;
+}
+
+.animate-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-show {
+    opacity: 1;
+    transform: translateY(0);
 }

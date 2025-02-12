@@ -18,6 +18,5 @@
         {{ $slot }}
     </div>
     <x-footer />
-    {{ $script ?? '' }}
 </body>
 </html>
