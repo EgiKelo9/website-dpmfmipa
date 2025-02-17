@@ -1,12 +1,28 @@
 <x-layouts.user>
     <x-slot:title>Beranda</x-slot>
     <style>
+        @keyframes appear {
+            from {
+                opacity: 0;
+                scale: 0.9;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                scale: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in {
+            animation: appear linear;
+            animation-timeline: view();
+            animation-range: entry 0 cover 30%;
+        }
         .animate-fade-in {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-
         .animate-show {
             opacity: 1;
             transform: translateY(0);
@@ -14,10 +30,10 @@
     </style>
     <div class="font-[Poppins]">
         {{-- Awal --}}
-        <div class="animate-fade-in relative font-poppins min-h-[450px] sm:min-h-[500px] lg:min-h-[600px]">
+        <div class="relative font-poppins min-h-[450px] sm:min-h-[500px] lg:min-h-[600px]">
             <img src="{{ asset('images/background-main.png') }}" alt="" class=" w-full object-cover min-h-screen">
             <div class="absolute top-0 left-0 w-full min-h-screen">
-                <div class="flex md:flex-row flex-col items-center justify-center gap-6 lg:gap-12 px-12 min-h-screen">
+                <div class="animate-fade-in fade-in flex md:flex-row flex-col items-center justify-center gap-6 lg:gap-12 px-12 min-h-screen">
                     <img src="{{ asset('images/LOGO DPM.png') }}" alt=""
                         class="xl:w-96 xl:h-96 lg:w-80 lg:h-80 md:w-64 md:h-64 sm:w-56 sm:h-56 w-48 h-48">
                     <div class="flex flex-col gap-2 md:gap-3 xl:gap-4">
@@ -36,9 +52,9 @@
         </div>
         {{-- Arti Parlemen --}}
         <h1
-            class="animate-fade-in mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 text-center font-extrabold text-2xl sm:text-3xl lg:text-4xl text-blue-900">
+            class="animate-fade-in fade-in mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 text-center font-extrabold text-2xl sm:text-3xl lg:text-4xl text-blue-900">
             PARLEMEN</h1>
-        <div class="animate-fade-in container mx-auto content-center px-8 sm:px-12 lg:px-24">
+        <div class="animate-fade-in fade-in container mx-auto content-center px-8 sm:px-12 lg:px-24">
             <div class="flex flex-col md:flex-row gap-5 items-center">
                 <div class="">
                     <img src="{{ asset('images/vikasa samyukta.jpg') }}" class="w-full xl:w-[90%] rounded-lg">
@@ -56,9 +72,9 @@
         </div>
         {{-- Visi --}}
         <h1
-            class="animate-fade-in mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 text-center font-extrabold text-2xl sm:text-3xl lg:text-4xl text-blue-900">
+            class="animate-fade-in fade-in mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 text-center font-extrabold text-2xl sm:text-3xl lg:text-4xl text-blue-900">
             VISI</h1>
-        <div class="animate-fade-in container mx-auto content-center px-8 sm:px-12 lg:px-24">
+        <div class="animate-fade-in fade-in container mx-auto content-center px-8 sm:px-12 lg:px-24">
             <p class="text-lg lg:text-xl hidden xl:block font-medium text-center text-slate-800">
                 Mewujudkan DPM FMIPA yang responsif dan berintegritas sebagai badan legislatif
                 <br>untuk menciptakan lingkungan yang kondusif dan inklusif.
@@ -70,9 +86,9 @@
         </div>
         {{-- Misi --}}
         <h1
-            class="animate-fade-in mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 text-center font-extrabold text-2xl sm:text-3xl lg:text-4xl text-blue-900">
+            class="animate-fade-in fade-in mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 text-center font-extrabold text-2xl sm:text-3xl lg:text-4xl text-blue-900">
             MISI</h1>
-        <div class="animate-fade-in container mx-auto content-center px-8 sm:px-12 lg:px-24">
+        <div class="animate-fade-in fade-in container mx-auto content-center px-8 sm:px-12 lg:px-24">
             <div class="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 w-full gap-8">
                 <div
                     class="bg-zinc-50 shadow-lg rounded-lg p-6 text-center hover:scale-105 transition-transform duration-300">
@@ -101,12 +117,12 @@
             </div>
         </div>
         {{-- Fungsionaris --}}
-        <div class="animate-fade-in mt-16 md:mt-24">
+        <div class="mt-16 md:mt-24">
             <div class="pt-40 pb-32 relative">
                 <div
                     class="absolute w-full h-full top-0 left-0 bg-cover bg-center bg-no-repeat bg-fixed bg-[url(/public/images/IMG_5599.jpg)]">
                 </div>
-                <div class="items-center text-center justify-center mx-8">
+                <div class="animate-fade-in fade-in items-center text-center justify-center mx-8">
                     <h1 class="text-white text-2xl md:text-4xl font-bold text-center relative">FUNGSIONARIS DPM FMIPA
                         2025</h1>
                     <a href="/fungsionaris" class="text-white text-base sm:text-xl text-center relative">Lihat lebih
@@ -115,7 +131,7 @@
             </div>
         </div>
         {{-- Program Kerja --}}
-        <div class="animate-fade-in container mx-auto content-center px-8 lg:px-16">
+        <div class="animate-fade-in fade-in container mx-auto content-center px-8 lg:px-16">
             <h1
                 class="mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 text-center font-extrabold text-2xl sm:text-3xl lg:text-4xl text-blue-900">
                 PROGRAM KERJA</h1>
@@ -165,12 +181,12 @@
             </h1>
         </div>
         {{-- Aspirasi --}}
-        <div class="animate-fade-in my-20">
+        <div class="my-20">
             <div class="pt-40 pb-32 relative">
                 <div
                     class="absolute w-full h-full top-0 left-0 bg-cover bg-center bg-no-repeat bg-fixed bg-[url(/public/images/gedung.png)]">
                 </div>
-                <div class="items-center text-center justify-center">
+                <div class="animate-fade-in fade-in items-center text-center justify-center">
                     <h1 class="text-white text-2xl md:text-4xl font-bold text-center relative">SAMPAIKAN ASPIRASIMU!
                     </h1>
                     <a href="/aspirasi" class="text-white text-base sm:text-xl text-center relative">Lihat lebih lengkap

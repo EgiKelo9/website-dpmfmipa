@@ -25,9 +25,6 @@ class HomeController extends Controller
         $komisi3 = Blog::where('divisi', 'Komisi 3')->get();
         $komisi4 = Blog::where('divisi', 'Komisi 4')->get();
         $komisi5 = Blog::where('divisi', 'Komisi 5')->get();
-        // foreach ($inti as $i) {
-        //     dd($i->title);
-        // }
         return view('webpage.programKerja', compact('inti', 'komisi1', 'komisi2', 'komisi3', 'komisi4', 'komisi5'));
     }
 

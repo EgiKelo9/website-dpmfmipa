@@ -12,7 +12,7 @@
 }
 
 .navbar {
-    @apply bg-transparent;
+    @apply md:bg-transparent bg-[#F6F6F6];
 }
 
 .navbar-nav.show {
@@ -29,19 +29,19 @@
 }
 
 .textSlate {
-    @apply text-white;
+    @apply md:text-white text-slate-800;
 }
 
 .textSlate.scrolled {
-    @apply text-slate-800;
+    @apply text-slate-800 hover:text-blue-900;
 }
 
 .textBlue {
-    @apply text-white;
+    @apply md:text-slate-400 text-blue-900;
 }
 
 .textBlue.scrolled {
-    @apply text-blue-900;
+    @apply text-blue-900 hover:text-blue-900;
 }
 
 .footer {
