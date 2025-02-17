@@ -114,15 +114,32 @@ class NotulensiMonevResource extends Resource
                             ])->columnSpan(1)
                         ]),
                     Forms\Components\Wizard\Step::make('Kegiatan')
-                        ->columns(1)
+                        ->columns(['md' => 2])
                         ->completedIcon('heroicon-s-check-circle')
                         ->schema([
+                            Forms\Components\TimePicker::make('start_time')
+                                ->required()
+                                ->seconds(false)
+                                ->label('Waktu Mulai')
+                                ->suffix('WITA')
+                                ->native(false)
+                                ->placeholder('HH:mm')
+                                ->columnSpan(['md' => 1]),
+                            Forms\Components\TimePicker::make('end_time')
+                                ->required()
+                                ->seconds(false)
+                                ->label('Waktu Selesai')
+                                ->suffix('WITA')
+                                ->native(false)
+                                ->placeholder('HH:mm')
+                                ->columnSpan(['md' => 1]),
                             Forms\Components\TextInput::make('kehadiran')
                                 ->label('Jumlah Panitia yang Hadir')
                                 ->required()
                                 ->numeric()
                                 ->suffix(' Orang')
                                 ->minValue(1)
+                                ->columnSpanFull()
                                 ->placeholder('Masukkan Jumlah Panitia'),
                             Forms\Components\RichEditor::make('agenda')
                                 ->label('Agenda Kegiatan')
@@ -134,6 +151,7 @@ class NotulensiMonevResource extends Resource
                                     'strike',
                                     'link',
                                 ])
+                                ->columnSpanFull()
                                 ->placeholder('Masukkan Agenda Kegiatan'),
                         ]),
                     Forms\Components\Wizard\Step::make('Poin Penilaian')
@@ -163,7 +181,7 @@ class NotulensiMonevResource extends Resource
                                                         'Kosong' => 'Kosong',
                                                     ])
                                                     ->default('Kosong'),
-                                                Forms\Components\TextArea::make("descriptions.{$penilaian->id}")
+                                                Forms\Components\Textarea::make("descriptions.{$penilaian->id}")
                                                     ->required()
                                                     ->rows(3)
                                                     ->columnSpan(['md' => 3])

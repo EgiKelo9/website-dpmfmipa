@@ -1,4 +1,3 @@
-<script defer src="{{ asset('js/animation/programkerja.js') }}"></script>
 <x-layouts.user>
     <x-slot:title>Program Kerja</x-slot>
 
@@ -16,9 +15,9 @@
     </style>
     <div class="font-[Poppins]">
         {{-- Awal --}}
-        <div class="animate-fade-in relative font-poppins min-h-screen">
-            <div
-                class="absolute w-full min-h-screen top-0 left-0 bg-cover bg-center bg-no-repeat bg-fixed bg-[url(/public/images/IMG_5599.jpg)]">
+        <div class="relative font-poppins min-h-screen">
+            <img src="{{ asset('images/IMG_5599.jpg') }}" alt="" class="w-full object-cover min-h-screen">
+            <div class="absolute top-0 left-0 w-full min-h-screen">
                 <div
                     class="container mx-auto content-center flex md:flex-row flex-col items-center justify-center gap-6 lg:gap-12 px-12 min-h-screen">
                     <div class="flex flex-col gap-2 md:gap-3 xl:gap-4 items-center">
@@ -49,54 +48,31 @@
             <h3 class=" mb-6 lg:mb-12 text-center font-semibold tracking-[0.05em] text-slate-500">
                 DPM FMIPA
             </h3>
-            <div class="flex flex-col items-center w-full">
+            <div class="flex flex-col items-center justify-center w-full">
                 <div class="w-full max-w-[900px] mx-auto relative">
                     <div class="px-4 sm:px-0">
                         <div class="w-full overflow-x-auto">
                             <ul
                                 class="flex justify-center whitespace-nowrap border-b border-black text-center font-medium text-slate-400 text-[12px] sm:text-[16px] min-w-max">
-                                <li class="flex-shrink-0">
-                                    <a class="tab-link p-4 inline-block cursor-pointer text-black" data-tab="tab1">
-                                        Rapat Kerja Gabungan
-                                    </a>
-                                </li>
-                                <li class="flex-shrink-0">
-                                    <a class="tab-link p-4 inline-block cursor-pointer hover:text-black"
-                                        data-tab="tab2">
-                                        Sidang Pleno
-                                    </a>
-                                </li>
-                                <li class="flex-shrink-0">
-                                    <a class="tab-link p-4 inline-block cursor-pointer hover:text-black"
-                                        data-tab="tab3">
-                                        Upgrading
-                                    </a>
-                                </li>
-                                <li class="flex-shrink-0">
-                                    <a class="tab-link p-4 inline-block cursor-pointer hover:text-black"
-                                        data-tab="tab4">
-                                        Matur Piuning
-                                    </a>
-                                </li>
-                                <li class="flex-shrink-0">
-                                    <a class="tab-link p-4 inline-block cursor-pointer hover:text-black"
-                                        data-tab="tab5">
-                                        Rapat Koordinasi
-                                    </a>
-                                </li>
-                                <li class="flex-shrink-0">
-                                    <a class="tab-link p-4 inline-block cursor-pointer hover:text-black"
-                                        data-tab="tab6">
-                                        Studi Banding
-                                    </a>
-                                </li>
+                                @foreach ($inti as $i)
+                                    <li class="flex-shrink-0">
+                                        <a class="tab-link p-4 inline-block cursor-pointer text-black" data-tab="tab-{{ $i->tab }}">
+                                            {{ $i->tab }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-gray-700 rounded-lg text-white w-full">
-                    <div id="tab1" class="tab-content hidden">
+                    @foreach ($inti as $i)
+                        <div id="tab-{{ $i->tab }}" class="tab-content hidden">
+                            <x-judul :content="$i"></x-judul>
+                        </div>
+                    @endforeach
+                    {{-- <div id="tab1" class="tab-content hidden">
                         <x-judul></x-judul>
                     </div>
                     <div id="tab2" class="tab-content hidden">
@@ -113,7 +89,7 @@
                     </div>
                     <div id="tab6" class="tab-content hidden">
                         <x-judul></x-judul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -323,5 +299,5 @@
             </div>
         </div>
     </div>
-
+    <script defer src="{{ asset('js/animation/programkerja.js') }}"></script>
 </x-layouts.user>

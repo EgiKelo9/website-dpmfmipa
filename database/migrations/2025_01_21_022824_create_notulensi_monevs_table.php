@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('notulensi_monevs', function (Blueprint $table) {
             $table->id();
+            $table->time('start_time');
+            $table->time('end_time');
             $table->integer('kehadiran');
             $table->text('agenda');
             $table->json('scores')->nullable();
