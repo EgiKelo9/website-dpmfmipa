@@ -76,7 +76,7 @@
                                 </div>
                                 <div
                                     class="mt-2 flex gap-4 overflow-x-auto p-1 sm:p-2 snap-x snap-mandatory scroll-smooth
-                                            [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                                            ">
                                     <img src="{{ asset('images/gedung.jpg') }}"
                                         class="h-28 sm:h-48 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 snap-center">
                                     <img src="{{ asset('images/gedung.jpg') }}"

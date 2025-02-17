@@ -16,7 +16,7 @@
     </style>
     <div class="font-[Poppins]">
         {{-- Awal --}}
-        <div class="relative font-poppins min-h-screen">
+        <div class="animate-fade-in relative font-poppins min-h-screen">
             <div
                 class="absolute w-full min-h-screen top-0 left-0 bg-cover bg-center bg-no-repeat bg-fixed bg-[url(/public/images/IMG_5599.jpg)]">
                 <div
@@ -50,11 +50,11 @@
                 DPM FMIPA
             </h3>
             <div class="flex flex-col items-center w-full">
-                <div class="w-full max-w-[950px] mx-auto relative">
+                <div class="w-full max-w-[900px] mx-auto relative">
                     <div class="px-4 sm:px-0">
                         <div class="w-full overflow-x-auto">
                             <ul
-                                class="flex whitespace-nowrap border-b border-black text-center font-medium text-slate-400 text-[12px] sm:text-[16px] min-w-max">
+                                class="flex justify-center whitespace-nowrap border-b border-black text-center font-medium text-slate-400 text-[12px] sm:text-[16px] min-w-max">
                                 <li class="flex-shrink-0">
                                     <a class="tab-link p-4 inline-block cursor-pointer text-black" data-tab="tab1">
                                         Rapat Kerja Gabungan

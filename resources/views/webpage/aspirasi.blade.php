@@ -1,7 +1,18 @@
 <x-layouts.user>
     <x-slot:title>Aspirasi</x-slot>
+    <style>
+        .animate-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
     <div class="font-[Poppins]">
-        <div class="relative font-poppins min-h-[450px] sm:min-h-[500px] lg:min-h-[600px]">
+        <div class="animate-fade-in relative font-poppins min-h-[450px] sm:min-h-[500px] lg:min-h-[600px]">
             <img src="{{ asset('images/background-jumdek.png') }}" alt="" class="w-full object-cover min-h-screen">
             <div class="absolute top-0 left-0 w-full min-h-screen">
                 <div class="container mx-auto content-center flex md:flex-row flex-col items-center justify-center gap-6 lg:gap-12 px-12 min-h-screen">
@@ -61,7 +72,7 @@
                 <div class="flex flex-col gap-2 lg:gap-4 mt-3">
                     <label class="text-blue-900 font-bold text-base sm:text-xl lg:text-2xl">FOTO PENDUKUNG</label>
                     <input type="file" name="dokumentasi" accept="image/*" multiple
-                        class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded 
+                        class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded
                         file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700
                         hover:file:bg-blue-100 border border-blue-800 rounded p-1 sm:p-2"/>
                     <p class="text-xs md:text-sm text-slate-500">Format yang diterima: JPG, JPEG, PNG, WEBP.</p>
@@ -86,4 +97,5 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/animation/aspirasi.js') }}"></script>
+    <script src="{{ asset('js/animation/fungsionaris.js') }}"></script>
 </x-layouts.user>
