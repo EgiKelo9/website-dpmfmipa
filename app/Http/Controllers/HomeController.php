@@ -9,7 +9,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('webpage.home');
+        $blogs = Blog::where('divisi', 'Inti')->limit(3)->get();
+        return view('webpage.home', compact('blogs'));
     }
 
     public function fungsio()

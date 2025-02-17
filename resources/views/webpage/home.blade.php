@@ -136,20 +136,23 @@
                 class="mt-8 mb-6 md:mt-12 md:mb-8 xl:mt-16 xl:mb-10 text-center font-extrabold text-2xl sm:text-3xl lg:text-4xl text-blue-900">
                 PROGRAM KERJA</h1>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 lg:gap-8 mt-10">
-                <div class="relative col-span-1 hover:scale-[102.5%] transition-transform duration-300">
-                    <img src="{{ asset('images/vikasasamyukta.jpg') }}" class="w-full object-cover">
-                    <div class="absolute right-0 top-0 left-0 bottom-0 bg-gradient-to-t from-sky-950 to-transparent">
+                @foreach ($blogs as $blog)
+                    <div class="relative col-span-1 hover:scale-[102.5%] transition-transform duration-300">
+                        <img src="{{ asset('storage/' . ($blog?->cover ?? '')) }}" class="w-full object-cover">
+                        <div class="absolute right-0 top-0 left-0 bottom-0 bg-gradient-to-t from-black to-transparent">
+                        </div>
+                        <div class="absolute right-0 left-0 bottom-4 xl:bottom-6">
+                            <h1 class="text-lg sm:text-base md:text-lg lg:text-xl font-semibold text-white truncate mx-4 xl:mx-6">
+                                {{ $blog->title }}
+                            </h1>
+                            <h1 class="text-base sm:text-sm md:text-base text-white font-light truncate mt-0.5 lg:mt-1 mx-4 xl:mx-6">
+                                {{ strip_tags(str_replace("&nbsp;", "", str_replace('</p>', "\n\n", $blog->description ?? '')), '<br><strong>') ??
+                                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ipsa doloremque iusto, possimus omnis saepe vero voluptates a, odit similique quas itaque mollitia est atque facere rerum sequi. Est, illo. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis natus vero voluptatum aspernatur sit in repellendus blanditiis consequatur! Accusantium reiciendis numquam excepturi voluptatibus earum recusandae exercitationem dolore in modi? Ducimus? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam laboriosam, ipsa facilis corrupti molestias est at dolores illo, in reprehenderit natus cupiditate quisquam aliquid asperiores ratione dolor quo et fugiat! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum dolores placeat libero ex voluptatum?' }}
+                            </h1>
+                        </div>
                     </div>
-                    <div class="absolute right-0 left-0 bottom-4 xl:bottom-6">
-                        <h1
-                            class="text-lg sm:text-base md:text-lg lg:text-xl font-semibold text-white truncate mx-4 xl:mx-6">
-                            Rapat Kerja gabungan LM FMIPA 2025</h1>
-                        <h1
-                            class="text-base sm:text-sm md:text-base text-white font-light truncate mt-0.5 lg:mt-1 mx-4 xl:mx-6">
-                            Selengkapnya ></h1>
-                    </div>
-                </div>
-                <div class="relative col-span-1 hover:scale-[102.5%] transition-transform duration-300">
+                @endforeach
+                {{-- <div class="relative col-span-1 hover:scale-[102.5%] transition-transform duration-300">
                     <img src="{{ asset('images/vikasasamyukta.jpg') }}" class="w-full object-cover">
                     <div class="absolute right-0 top-0 left-0 bottom-0 bg-gradient-to-t from-sky-950 to-transparent">
                     </div>
@@ -174,7 +177,7 @@
                             class="text-base sm:text-sm md:text-base text-white font-light truncate mt-0.5 lg:mt-1 mx-4 xl:mx-6">
                             Selengkapnya ></h1>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <h1 class="text-lg md:text-xl mt-4 sm:mt-6 lg:mt-8 text-center font-medium no-underline">
                 <a href="/program-kerja" class="text-slate-900 hover:text-slate-500">Lihat lebih lanjut ></a>

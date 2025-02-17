@@ -26,7 +26,7 @@
                                     class="max-h-96 w-full object-cover">
                             </div>
                             <p class="mt-5 text-slate-500 text-justify text-[12px] sm:text-[16px] whitespace-pre-line">
-                                {{ strip_tags(str_replace('</p>', "\n\n", $content->description ?? ''), '<br><strong>') ??
+                                {{ strip_tags(str_replace("&nbsp;", "", str_replace('</p>', "\n\n", $content->description ?? '')), '<br><strong>') ??
                                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ipsa doloremque iusto, possimus omnis saepe vero voluptates a, odit similique quas itaque mollitia est atque facere rerum sequi. Est, illo. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis natus vero voluptatum aspernatur sit in repellendus blanditiis consequatur! Accusantium reiciendis numquam excepturi voluptatibus earum recusandae exercitationem dolore in modi? Ducimus? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam laboriosam, ipsa facilis corrupti molestias est at dolores illo, in reprehenderit natus cupiditate quisquam aliquid asperiores ratione dolor quo et fugiat! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum dolores placeat libero ex voluptatum?' }}
                             </p>
                             <h2 class="font-bold text-sky-900 text-[16px] sm:text-[26px]">Dokumentasi</h2>
