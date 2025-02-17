@@ -21,6 +21,8 @@ class CreateNotulensiMonev extends CreateRecord
     protected function handleRecordCreation(array $data): NotulensiMonev
     {
         $notulensi = NotulensiMonev::create([
+            'start_time' => $data['start_time'],
+            'end_time' => $data['end_time'],
             'kehadiran' => $data['kehadiran'],
             'tim_monev' => $data['tim_monev'],
             'agenda' => $data['agenda'],

@@ -28,18 +28,34 @@ class BlogResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('tab')
+                    ->label('Tab Blog')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder('Masukkan Tab Blog'),
                 Forms\Components\TextInput::make('title')
                     ->label('Judul Blog')
                     ->required()
                     ->maxLength(255)
-                    ->placeholder('Masukkan Judul Blog')
-                    ->columnSpanFull(),
+                    ->placeholder('Masukkan Judul Blog'),
                 Forms\Components\TextInput::make('subtitle')
                     ->label('Subjudul Blog')
                     ->required()
                     ->maxLength(255)
-                    ->placeholder('Masukkan Subjudul Blog')
-                    ->columnSpanFull(),
+                    ->placeholder('Masukkan Subjudul Blog'),
+                Forms\Components\Select::make('divisi')
+                    ->label('Divisi Blog')
+                    ->required()
+                    ->options([
+                        'Inti' => 'Inti',
+                        'Komisi 1' => 'Komisi 1',
+                        'Komisi 2' => 'Komisi 2',
+                        'Komisi 3' => 'Komisi 3',
+                        'Komisi 4' => 'Komisi 4',
+                        'Komisi 5' => 'Komisi 5',
+                        'Lainnya' => 'Lainnya',
+                    ])
+                    ->placeholder('Pilih Divisi Blog'),
                 Forms\Components\RichEditor::make('description')
                     ->label('Konten Blog')
                     ->required()
@@ -80,8 +96,18 @@ class BlogResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('tab')
+                    ->label('Tab Blog')
+                    ->sortable()
+                    ->wrap()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Judul Blog')
+                    ->sortable()
+                    ->wrap()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('divisi')
+                    ->label('Divisi')
                     ->sortable()
                     ->wrap()
                     ->searchable(),
@@ -94,13 +120,25 @@ class BlogResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal Upload')
                     ->sortable()
-                    ->date('l, j F Y'),
+                    ->date('l, j F Y')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('user.username')
                     ->label('Dibuat Oleh')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('divisi')
+                    ->options([
+                        'Inti' => 'Inti',
+                        'Komisi 1' => 'Komisi 1',
+                        'Komisi 2' => 'Komisi 2',
+                        'Komisi 3' => 'Komisi 3',
+                        'Komisi 4' => 'Komisi 4',
+                        'Komisi 5' => 'Komisi 5',
+                        'Lainnya' => 'Lainnya',
+                    ]),
                 Tables\Filters\Filter::make('created_at')
                     ->form([
                         Forms\Components\DatePicker::make('tanggal')
