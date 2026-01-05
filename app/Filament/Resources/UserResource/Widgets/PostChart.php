@@ -13,7 +13,7 @@ class PostChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Aspirasi Masuk',
+                    'label' => 'Feeds Diproses',
                     'data' => collect(range(1, 12))->map(function ($month) {
                         return \App\Models\Post::whereYear('created_at', now()->year)
                             ->where('diproses', 1)

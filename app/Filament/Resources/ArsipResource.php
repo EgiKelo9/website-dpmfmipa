@@ -34,14 +34,15 @@ class ArsipResource extends Resource
                 Forms\Components\Section::make([
                     Forms\Components\TextInput::make('title')
                         ->required()
-                        ->maxLength(255)
-                        ->label('Judul Arsip')
+                        // ->maxLength(255)
+                        ->label('Judul Arsip Dokumen')
                         ->placeholder('Masukkan Judul Dokumen'),
                     Forms\Components\Select::make('id_kategori')
                         ->required()
                         ->label('Kategori Arsip')
                         ->relationship('kategori', 'name'),
                     Forms\Components\Textarea::make('description')
+                        //->required()
                         ->columnSpanFull()
                         ->label('Catatan Arsip')
                         ->placeholder('Masukkan Catatan Arsip'),
@@ -91,7 +92,7 @@ class ArsipResource extends Resource
                     ->wrap()
                     ->sortable()
                     ->searchable()
-                    ->label('Judul Arsip'),
+                    ->label('Judul Arsip Dokumen'),
                 Tables\Columns\TextColumn::make('kategori.name')
                     ->sortable()
                     ->searchable()

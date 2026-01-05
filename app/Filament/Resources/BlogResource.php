@@ -44,7 +44,7 @@ class BlogResource extends Resource
                     ->maxLength(255)
                     ->placeholder('Masukkan Subjudul Blog'),
                 Forms\Components\Select::make('divisi')
-                    ->label('Divisi Blog')
+                    ->label('Bagian Blog')
                     ->required()
                     ->options([
                         'Inti' => 'Inti',
@@ -55,7 +55,7 @@ class BlogResource extends Resource
                         'Komisi 5' => 'Komisi 5',
                         'Lainnya' => 'Lainnya',
                     ])
-                    ->placeholder('Pilih Divisi Blog'),
+                    ->placeholder('Pilih Bagian Blog'),
                 Forms\Components\RichEditor::make('description')
                     ->label('Konten Blog')
                     ->required()
@@ -107,13 +107,13 @@ class BlogResource extends Resource
                     ->wrap()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('divisi')
-                    ->label('Divisi')
+                    ->label('Bagian')
                     ->sortable()
                     ->wrap()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subtitle')
                     ->label('Subjudul Blog')
-                    ->limit(50)
+                    ->limit(40)
                     ->html()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),

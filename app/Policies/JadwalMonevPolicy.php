@@ -29,7 +29,7 @@ class JadwalMonevPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 
     /**
@@ -37,7 +37,7 @@ class JadwalMonevPolicy
      */
     public function update(User $user, JadwalMonev $jadwalMonev): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 
     /**
@@ -45,7 +45,7 @@ class JadwalMonevPolicy
      */
     public function delete(User $user, JadwalMonev $jadwalMonev): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 
     /**
@@ -53,7 +53,7 @@ class JadwalMonevPolicy
      */
     public function restore(User $user, JadwalMonev $jadwalMonev): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 
     /**
@@ -61,6 +61,6 @@ class JadwalMonevPolicy
      */
     public function forceDelete(User $user, JadwalMonev $jadwalMonev): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 }

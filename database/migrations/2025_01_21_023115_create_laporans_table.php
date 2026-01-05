@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('laporans', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->enum('type', ['Laporan Pertanggungjawaban', 'Laporan Pertanggungjawaban Keuangan', 'Laporan Lainnya'])->default('Laporan Lainnya');
+            $table->enum('type', ['Laporan Pertanggungjawaban', 'Laporan Pertanggungjawaban Keuangan', 'Term of References (TOR)', 'Rancangan Anggaran Biaya', 'Laporan Lainnya'])->default('Laporan Lainnya');
             $table->text('description')->nullable();
             $table->text('file');
             $table->foreignIdFor(Lembaga::class, 'id_lembaga')->constrained('lembagas', 'id')->onDelete('cascade')->onUpdate('cascade');

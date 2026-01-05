@@ -109,7 +109,7 @@ class ProgramKerjaResource extends Resource
                         ->successRedirectUrl(route('filament.admin.resources.program-kerja.index')),
                     Tables\Actions\ForceDeleteAction::make()
                         ->successRedirectUrl(route('filament.admin.resources.program-kerja.index')),
-                ])->visible(fn () => in_array(Auth::user()->role, ['Admin', 'Komisi 4'])),
+                ])->visible(fn () => in_array(Auth::user()->role, ['Admin', 'Inti', 'Komisi 4'])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -125,7 +125,7 @@ class ProgramKerjaResource extends Resource
                         ->requiresConfirmation()
                         ->action(fn (Collection $records) => $records->each->forceDelete())
                         ->deselectRecordsAfterCompletion(),
-                ])->visible(fn () => in_array(Auth::user()->role, ['Admin', 'Komisi 4'])),
+                ])->visible(fn () => in_array(Auth::user()->role, ['Admin', 'Inti', 'Komisi 4'])),
             ]);
     }
 

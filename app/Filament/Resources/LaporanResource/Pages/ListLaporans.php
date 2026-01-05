@@ -33,6 +33,12 @@ class ListLaporans extends ListRecords
             'lpjk' => Tab::make('LPJK')
                 ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'Laporan Pertanggungjawaban Keuangan'))
                 ->badge(Laporan::where('type', 'Laporan Pertanggungjawaban Keuangan')->count()),
+            'tor' => Tab::make('TOR')
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'Term of References (TOR)'))
+                ->badge(Laporan::where('type', 'Term of References (TOR)')->count()),
+            'rab' => Tab::make('RAB')
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'Rancangan Anggaran Biaya'))
+                ->badge(Laporan::where('type', 'Rancangan Anggaran Biaya')->count()),
             'lain' => Tab::make('Lainnya')
                 ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'Laporan Lainnya'))
                 ->badge(Laporan::where('type', 'Laporan Lainnya')->count()),

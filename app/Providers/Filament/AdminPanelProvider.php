@@ -38,10 +38,11 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->spa()
+            // ->spa()
             ->login()
             ->passwordReset()
             ->sidebarCollapsibleOnDesktop()
+            ->favicon(asset('images/LOGO DPM.png'))
             ->sidebarWidth('18rem')
             ->colors([
                 'primary' => Color::Amber,

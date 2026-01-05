@@ -108,7 +108,7 @@ class SuratResource extends Resource
                     ->wrap()
                     ->sortable()
                     ->searchable()
-                    ->label('Judul Surat'),
+                    ->label('Judul Dokumen Surat'),
                 Tables\Columns\TextColumn::make('type')
                     ->sortable()
                     ->searchable()
@@ -116,13 +116,14 @@ class SuratResource extends Resource
                 Tables\Columns\TextColumn::make('kategori.name')
                     ->sortable()
                     ->searchable()
-                    ->label('Kategori Surat'),
+                    ->label('Kategori'),
                 Tables\Columns\TextColumn::make('lembaga.username')
                     ->sortable()
                     ->searchable()
                     ->label('Lembaga')
                     ->default('Tidak ditambahkan'),
                 Tables\Columns\TextColumn::make('programKerja.name')
+                    ->wrap()
                     ->sortable()
                     ->searchable()
                     ->label('Program Kerja')

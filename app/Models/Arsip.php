@@ -12,6 +12,9 @@ class Arsip extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+    protected $casts = [
+        'file' => 'array',
+    ];
     // protected $with = [
     //     'user',
     //     'kategori',
