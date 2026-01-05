@@ -38,8 +38,16 @@ class JadwalMonevResource extends Resource
                         ->placeholder('Masukkan Nama Kegiatan'),
                     Forms\Components\Select::make('id_proker')
                         ->required()
-                        ->options(ProgramKerja::all()
-                        ->pluck('name', 'id'))
+                        ->options(function () {
+                            $userRole = Auth::user()->role;
+                            if ($userRole === 'Admin' || $userRole === 'Komisi 4') {
+                                return ProgramKerja::pluck('name', 'id');
+                            } else {
+                                return ProgramKerja::whereHas('timMonev', function ($query) {
+                                    $query->where('id_user', Auth::user()->id);
+                                })->pluck('name', 'id');
+                            }
+                        })
                         ->searchable()
                         ->label('Program Kerja'),
                     Forms\Components\TextInput::make('jumlah_tim_monev')

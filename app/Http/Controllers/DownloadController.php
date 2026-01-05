@@ -14,6 +14,7 @@ class DownloadController extends Controller
 {
     public function downloadNotulensi(Request $request)
     {
+        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         if ($request->id) {
             $notulensiId = $request->id;
             $notulensi = NotulensiMonev::find($notulensiId);
@@ -42,7 +43,19 @@ class DownloadController extends Controller
                 'waktuSelesai' => \Carbon\Carbon::parse($notulensi->end_time)->translatedFormat('H:i'),
                 'panitiaHadir' => $notulensi->kehadiran,
                 'totalPanitia' => $proker->jumlah_panitia,
-                'agendaKegiatan' => rtrim(strip_tags(str_replace(array("<li>", "</li>"), array("-  ", "\n"), $notulensi->agenda)), "\n"),
+                'agendaKegiatan' => rtrim(
+                    html_entity_decode(
+                        strip_tags(
+                            str_replace(
+                                array("<li>", "</li>", "<p>", "</p>"), 
+                                array("-  ", "\n", "", "\n"), 
+                                $notulensi->agenda
+                            )
+                        ),
+                        ENT_QUOTES | ENT_HTML5,
+                        'UTF-8'
+                    )
+                , "\n"),
             ]);
 
             for ($i = 1; $i <= $penilaian->count(); $i++) {

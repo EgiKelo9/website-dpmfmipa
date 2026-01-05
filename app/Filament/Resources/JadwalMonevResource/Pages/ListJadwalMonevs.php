@@ -2,12 +2,13 @@
 
 namespace App\Filament\Resources\JadwalMonevResource\Pages;
 
-use App\Filament\Resources\JadwalMonevResource;
-use App\Models\JadwalMonev;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
+use App\Models\JadwalMonev;
+use Illuminate\Support\Facades\Auth;
 use Filament\Resources\Components\Tab;
+use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\JadwalMonevResource;
 
 class ListJadwalMonevs extends ListRecords
 {
@@ -26,13 +27,52 @@ class ListJadwalMonevs extends ListRecords
     {
         return [
             'semua' => Tab::make('Semua'),
-            // ->badge(JadwalMonev::count()),
             'mendatang' => Tab::make('Mendatang')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('notulen', false)->orderBy('tanggal', 'asc'))
-                ->badge(JadwalMonev::where('notulen', false)->count()),
+                ->modifyQueryUsing(function (Builder $query) {
+                    $user = Auth::user();
+                    if (!in_array($user->role, ['Admin', 'Komisi 4'])) {
+                        return $query->whereHas('timMonev', function ($query) {
+                            $query->where('id_user', Auth::user()->id);
+                        })
+                        ->where('notulen', false)->orderBy('tanggal', 'asc');
+                    } else {
+                        return $query->where('notulen', false)->orderBy('tanggal', 'asc');
+                    }
+                })
+                ->badge(function () {
+                    $user = Auth::user();
+                    if (!in_array($user->role, ['Admin', 'Komisi 4'])) {
+                        return JadwalMonev::query()->whereHas('timMonev', function ($query) {
+                            $query->where('id_user', Auth::user()->id);
+                        })
+                        ->where('notulen', false)->count();
+                    } else {
+                        return JadwalMonev::query()->where('notulen', false)->count();
+                    }
+                }),
             'selesai' => Tab::make('Selesai')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('notulen', true)->orderBy('tanggal', 'desc'))
-                ->badge(JadwalMonev::where('notulen', true)->count()),
+                ->modifyQueryUsing(function (Builder $query) {
+                    $user = Auth::user();
+                    if (!in_array($user->role, ['Admin', 'Komisi 4'])) {
+                        return $query->whereHas('timMonev', function ($query) {
+                            $query->where('id_user', Auth::user()->id);
+                        })
+                        ->where('notulen', true)->orderBy('tanggal', 'desc');
+                    } else {
+                        return $query->where('notulen', true)->orderBy('tanggal', 'desc');
+                    }
+                })
+                ->badge(function () {
+                    $user = Auth::user();
+                    if (!in_array($user->role, ['Admin', 'Komisi 4'])) {
+                        return JadwalMonev::query()->whereHas('timMonev', function ($query) {
+                            $query->where('id_user', Auth::user()->id);
+                        })
+                        ->where('notulen', true)->count();
+                    } else {
+                        return JadwalMonev::query()->where('notulen', true)->count();
+                    }
+                }),
         ];
     }
 

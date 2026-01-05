@@ -296,11 +296,9 @@ class NotulensiMonevResource extends Resource
                     Tables\Actions\RestoreAction::make()
                         ->successRedirectUrl(route('filament.admin.resources.notulensi-monev.index')),
                     Tables\Actions\ForceDeleteAction::make()
-                        ->after(function ($state) {
-                            $form = $state->form;
-                            if (!empty($form['id_jadwal'])) {
-                                $idJadwal = $form['id_jadwal'];
-                                $jadwal = JadwalMonev::find($idJadwal);
+                        ->after(function (Tables\Actions\ForceDeleteAction $action, mixed $record) {
+                            if (!empty($record->id_jadwal)) {
+                                $jadwal = JadwalMonev::find($record->id_jadwal);
                                 if ($jadwal !== null) {
                                     $jadwal->update(['notulen' => false]);
                                 }
