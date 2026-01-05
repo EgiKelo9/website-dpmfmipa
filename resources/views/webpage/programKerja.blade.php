@@ -35,7 +35,7 @@
             <div class="absolute top-0 left-0 w-full min-h-screen">
                 <div
                     class="animate-fade-in fade-in container mx-auto content-center flex md:flex-row flex-col items-center justify-center gap-6 lg:gap-12 px-12 min-h-screen">
-                    <div class="flex flex-col gagap-3 xl:gap-4 items-center">
+                    <div class="flex flex-col gap-2 md:gap-3 xl:gap-4 items-center">
                         <img src="{{ asset('images/LOGO DPM.png') }}" alt="" class="w-24">
                         <h1
                             class="text-wrap text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-center font-bold text-white">
