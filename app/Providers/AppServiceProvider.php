@@ -39,9 +39,8 @@ use App\Policies\KategoriArsipPolicy;
 use App\Policies\KategoriSuratPolicy;
 use App\Policies\NotulensiMonevPolicy;
 use App\Policies\PenilaianMonevPolicy;
-
-use Illuminate\Support\ServiceProvider;
 use App\Policies\KategoriAspirasiPolicy;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -79,6 +78,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+        if($this->app->environment('production')) {
+            \URL::forceScheme('https');
+        }
     }
 }

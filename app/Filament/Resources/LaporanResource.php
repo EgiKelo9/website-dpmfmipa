@@ -75,6 +75,8 @@ class LaporanResource extends Resource
                         ->options([
                             'Laporan Pertanggungjawaban' => 'Laporan Pertanggungjawaban',
                             'Laporan Pertanggungjawaban Keuangan' => 'Laporan Pertanggungjawaban Keuangan',
+                            'Term of References (TOR)' => 'Term of References (TOR)',
+                            'Rancangan Anggaran Biaya' => 'Rancangan Anggaran Biaya',
                             'Laporan Lainnya' => 'Laporan Lainnya',
                         ]),
                     Forms\Components\Select::make('id_lembaga')

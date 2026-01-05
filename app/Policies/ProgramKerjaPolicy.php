@@ -29,7 +29,7 @@ class ProgramKerjaPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 
     /**
@@ -37,7 +37,7 @@ class ProgramKerjaPolicy
      */
     public function update(User $user, ProgramKerja $programKerja): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 
     /**
@@ -45,7 +45,7 @@ class ProgramKerjaPolicy
      */
     public function delete(User $user, ProgramKerja $programKerja): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 
     /**
@@ -53,7 +53,7 @@ class ProgramKerjaPolicy
      */
     public function restore(User $user, ProgramKerja $programKerja): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 
     /**
@@ -61,6 +61,6 @@ class ProgramKerjaPolicy
      */
     public function forceDelete(User $user, ProgramKerja $programKerja): bool
     {
-        return in_array($user->role, ['Admin', 'Komisi 4']);
+        return in_array($user->role, ['Admin', 'Inti', 'Komisi 4']);
     }
 }

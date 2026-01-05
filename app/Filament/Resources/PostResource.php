@@ -119,7 +119,7 @@ class PostResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('caption')
                     ->label('Deskripsi Feed')
-                    ->limit(50)
+                    ->limit(40)
                     ->html()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),

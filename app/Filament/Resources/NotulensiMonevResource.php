@@ -90,7 +90,7 @@ class NotulensiMonevResource extends Resource
                                         $selectedJadwalId = $get('id_jadwal');
                                         $jadwal = JadwalMonev::find($selectedJadwalId);
                                         return $jadwal ? $jadwal->timMonev()
-                                            ->where('id', '!=', 1)
+                                            ->where('id', '!=', 41)
                                             ->pluck('name', 'id')
                                             ->toArray() : [];
                                     })
@@ -114,15 +114,32 @@ class NotulensiMonevResource extends Resource
                             ])->columnSpan(1)
                         ]),
                     Forms\Components\Wizard\Step::make('Kegiatan')
-                        ->columns(1)
+                        ->columns(['md' => 2])
                         ->completedIcon('heroicon-s-check-circle')
                         ->schema([
+                            Forms\Components\TimePicker::make('start_time')
+                                ->required()
+                                ->seconds(false)
+                                ->label('Waktu Mulai')
+                                ->suffix('WITA')
+                                ->native(false)
+                                ->placeholder('HH:mm')
+                                ->columnSpan(['md' => 1]),
+                            Forms\Components\TimePicker::make('end_time')
+                                ->required()
+                                ->seconds(false)
+                                ->label('Waktu Selesai')
+                                ->suffix('WITA')
+                                ->native(false)
+                                ->placeholder('HH:mm')
+                                ->columnSpan(['md' => 1]),
                             Forms\Components\TextInput::make('kehadiran')
                                 ->label('Jumlah Panitia yang Hadir')
                                 ->required()
                                 ->numeric()
                                 ->suffix(' Orang')
                                 ->minValue(1)
+                                ->columnSpanFull()
                                 ->placeholder('Masukkan Jumlah Panitia'),
                             Forms\Components\RichEditor::make('agenda')
                                 ->label('Agenda Kegiatan')
@@ -134,6 +151,7 @@ class NotulensiMonevResource extends Resource
                                     'strike',
                                     'link',
                                 ])
+                                ->columnSpanFull()
                                 ->placeholder('Masukkan Agenda Kegiatan'),
                         ]),
                     Forms\Components\Wizard\Step::make('Poin Penilaian')
@@ -163,7 +181,7 @@ class NotulensiMonevResource extends Resource
                                                         'Kosong' => 'Kosong',
                                                     ])
                                                     ->default('Kosong'),
-                                                Forms\Components\TextArea::make("descriptions.{$penilaian->id}")
+                                                Forms\Components\Textarea::make("descriptions.{$penilaian->id}")
                                                     ->required()
                                                     ->rows(3)
                                                     ->columnSpan(['md' => 3])
@@ -208,7 +226,8 @@ class NotulensiMonevResource extends Resource
                 Tables\Columns\TextColumn::make('jadwal.name')
                     ->label('Jadwal Kegiatan')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('jadwal.programKerja.name')
                     ->searchable()
                     ->sortable(),
@@ -222,9 +241,11 @@ class NotulensiMonevResource extends Resource
                     ->suffix(' Orang'),
                 Tables\Columns\TextColumn::make('id_user')
                     ->label('Notulen')
+                    ->wrap()
                     ->formatStateUsing(function ($state) {
                         $user = User::find($state);
-                        return $user->username . ' (' . $user->specifiedRole . ')';
+                        return $user->username;
+                        // return $user->username . ' (' . $user->specifiedRole . ')';
                     }),
             ])
             ->filters([
@@ -278,11 +299,9 @@ class NotulensiMonevResource extends Resource
                     Tables\Actions\RestoreAction::make()
                         ->successRedirectUrl(route('filament.admin.resources.notulensi-monev.index')),
                     Tables\Actions\ForceDeleteAction::make()
-                        ->after(function ($state) {
-                            $form = $state->form;
-                            if (!empty($form['id_jadwal'])) {
-                                $idJadwal = $form['id_jadwal'];
-                                $jadwal = JadwalMonev::find($idJadwal);
+                        ->after(function (Tables\Actions\ForceDeleteAction $action, mixed $record) {
+                            if (!empty($record->id_jadwal)) {
+                                $jadwal = JadwalMonev::find($record->id_jadwal);
                                 if ($jadwal !== null) {
                                     $jadwal->update(['notulen' => false]);
                                 }
@@ -304,7 +323,7 @@ class NotulensiMonevResource extends Resource
                         ->requiresConfirmation()
                         ->action(fn(Collection $records) => $records->each->forceDelete())
                         ->deselectRecordsAfterCompletion(),
-                ])->visible(fn() => in_array(Auth::user()->role, ['Admin', 'Inti', 'Komisi 4'])),
+                ])->visible(fn() => in_array(Auth::user()->role, ['Admin', 'Komisi 4'])),
             ]);
     }
 
