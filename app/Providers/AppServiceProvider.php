@@ -31,6 +31,7 @@ use App\Policies\LaporanPolicy;
 use App\Policies\LembagaPolicy;
 use App\Policies\MentionPolicy;
 use App\Models\KategoriAspirasi;
+use App\Models\Signature;
 use App\Policies\AspirasiPolicy;
 use App\Policies\JadwalMonevPolicy;
 use App\Policies\ProgramKerjaPolicy;
@@ -40,7 +41,9 @@ use App\Policies\KategoriSuratPolicy;
 use App\Policies\NotulensiMonevPolicy;
 use App\Policies\PenilaianMonevPolicy;
 use App\Policies\KategoriAspirasiPolicy;
+use App\Policies\SignaturePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -64,6 +67,7 @@ class AppServiceProvider extends ServiceProvider
         KategoriArsip::class => KategoriArsipPolicy::class,
         Comment::class => CommentPolicy::class,
         Mention::class => MentionPolicy::class,
+        Signature::class => SignaturePolicy::class,
     ];
     /**
      * Register any application services.
@@ -80,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         if($this->app->environment('production')) {
-            \URL::forceScheme('https');
+            URL::forceScheme('https');
         }
     }
 }
