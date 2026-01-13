@@ -25,4 +25,8 @@ class Lembaga extends Model
     {
         return $this->hasMany(Laporan::class, 'id_lembaga');
     }
+    public function signatures()
+    {
+        return $this->hasMany(Signature::class, 'id_lembaga');
+    }
 }

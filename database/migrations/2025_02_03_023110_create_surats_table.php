@@ -20,9 +20,9 @@ return new class extends Migration
             $table->enum('type', ['Surat Masuk', 'Surat Keluar']);
             $table->text('description')->nullable();
             $table->text('file');
-            $table->foreignIdFor(Lembaga::class, 'id_lembaga')->nullable()->constrained('lembagas', 'id')->nullOnDelete()->cascadeOnDelete();
-            $table->foreignIdFor(ProgramKerja::class, 'id_proker')->nullable()->constrained('program_kerjas', 'id')->nullOnDelete()->cascadeOnDelete();
-            $table->foreignIdFor(KategoriSurat::class, 'id_kategori')->constrained('kategori_surats', 'id')->nullOnDelete()->cascadeOnDelete();
+            $table->foreignIdFor(Lembaga::class, 'id_lembaga')->nullable()->constrained('lembagas', 'id')->cascadeOnDelete();
+            $table->foreignIdFor(ProgramKerja::class, 'id_proker')->nullable()->constrained('program_kerjas', 'id')->cascadeOnDelete();
+            $table->foreignIdFor(KategoriSurat::class, 'id_kategori')->constrained('kategori_surats', 'id')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

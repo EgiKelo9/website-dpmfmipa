@@ -89,8 +89,9 @@ class NotulensiMonevResource extends Resource
                                     ->options(function (callable $get) {
                                         $selectedJadwalId = $get('id_jadwal');
                                         $jadwal = JadwalMonev::find($selectedJadwalId);
+                                        $adminId = User::where('specifiedRole', 'Admin')->value('id');
                                         return $jadwal ? $jadwal->timMonev()
-                                            ->where('id', '!=', 41)
+                                            ->where('id', '!=', $adminId)
                                             ->pluck('name', 'id')
                                             ->toArray() : [];
                                     })

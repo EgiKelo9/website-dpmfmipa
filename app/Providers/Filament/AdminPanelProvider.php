@@ -42,7 +42,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->passwordReset()
             ->sidebarCollapsibleOnDesktop()
-            ->favicon(asset('images/LOGO DPM.png'))
+            ->favicon(asset('images/LOGO DPM.ico'))
             ->sidebarWidth('18rem')
             ->colors([
                 'primary' => Color::Amber,
