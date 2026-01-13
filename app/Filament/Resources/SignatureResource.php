@@ -48,7 +48,7 @@ class SignatureResource extends Resource
                         ->columnSpanFull()
                         ->searchable()
                         ->label('Lembaga Pemohon'),
-                    Forms\Components\TextArea::make('keperluan')
+                    Forms\Components\Textarea::make('keperluan')
                         ->label('Keperluan')
                         ->placeholder('Masukkan Keperluan TTE')
                         ->required()
