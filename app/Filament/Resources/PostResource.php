@@ -128,11 +128,19 @@ class PostResource extends Resource
                     ->disabled(fn($record) => now()->lt(Carbon::parse($record->tanggal_upload)))
                     ->afterStateUpdated(function ($record, $state) {
                         $record->update(['diproses' => $state]);
-                        Notification::make()
-                            ->title($state ? 'Feed telah diproses' : 'Feed batal diproses')
-                            ->success()
-                            ->duration(5000)
-                            ->send();
+                        if ($state) {
+                            Notification::make()
+                                ->title('Feed telah diproses')
+                                ->success()
+                                ->duration(5000)
+                                ->send();
+                        } else {
+                            Notification::make()
+                                ->title('Feed batal diproses')
+                                ->danger()
+                                ->duration(5000)
+                                ->send();
+                        }
                     }),
             ])
             ->filters([

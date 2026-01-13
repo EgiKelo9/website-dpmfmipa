@@ -103,4 +103,8 @@ class User extends Authenticatable implements HasAvatar, HasName, FilamentUser
     {
         return $this->hasMany(Comment::class, 'id_user');
     }
+    public function signatures()
+    {
+        return $this->hasMany(Signature::class, 'id_user');
+    }
 }
