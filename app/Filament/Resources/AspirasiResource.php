@@ -85,6 +85,9 @@ class AspirasiResource extends Resource
                     ->limit(100),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('programStudi.name')
+                    ->label('Program Studi')
+                    ->relationship('programStudi', 'name'),
                 Tables\Filters\SelectFilter::make('kategori.name')
                     ->label('Kategori Aspirasi')
                     ->relationship('kategori', 'name'),
