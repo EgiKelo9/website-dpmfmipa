@@ -26,6 +26,8 @@ Route::controller(SignatureController::class)->group(function () {
     Route::post('/signature/create', 'store')->name('signature.store');
     Route::get('/signature/search', 'search')->name('signature.search');
     Route::post('/signature/search', 'find')->name('signature.find');
+    Route::get('/signature/download', 'downloadFromPath')->name('signature.download-from-path');
     Route::get('/signature/{unique_link}', 'show')->name('signature.show');
     Route::get('/admin/tanda-tangan-elektronik/download-qr/{nomor}', 'downloadQRCode')->name('signature.download-qr');
+    Route::get('/admin/tanda-tangan-elektronik/download-pdf/{nomor}', 'downloadPDF')->name('signature.download-pdf');
 });

@@ -17,7 +17,7 @@ class CreateSignature extends CreateRecord
     {
         $signature = Signature::create([
             'nomor' => $data['nomor'],
-            'unique_link' => uniqid(env('APP_URL') . '/signature/', true),
+            'unique_link' => str_replace('.', '-', uniqid(env('APP_URL') . '/signature/', true)),
             'file' => $data['file'],
             'keperluan' => $data['keperluan'],
             'id_user' => $data['id_user'],

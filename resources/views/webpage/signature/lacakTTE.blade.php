@@ -62,8 +62,10 @@
                         Nomor Surat
                         <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" name="nomor" placeholder="Masukkan Nomor Surat" required
-                        class="rounded-md px-2.5 py-2 w-full border active:border-black text-sm placeholder:text-black/50" />
+                    <input type="text" name="nomor" placeholder="Masukkan Nomor Surat"
+                        value="{{ session('nomor') ?? old('nomor') }}" {{ session('signed_file') ? 'disabled' : '' }}
+                        required
+                        class="rounded-md px-2.5 py-2 w-full border active:border-black text-sm placeholder:text-black/50 disabled:bg-gray-100 disabled:cursor-not-allowed" />
                 </div>
 
                 <!-- Lembaga Pemohon -->
@@ -72,38 +74,33 @@
                         Lembaga Pemohon
                         <span class="text-red-500">*</span>
                     </label>
-                    <select name="id_lembaga" id="id_lembaga" required
-                        class="rounded-md px-2.5 py-2 w-full border active:border-black text-sm placeholder:text-black/50">
-                        <option value="" disabled selected>Pilih Lembaga Pemohon</option>
+                    <select name="id_lembaga" id="id_lembaga" {{ session('signed_file') ? 'disabled' : '' }} required
+                        class="rounded-md px-2.5 py-2 w-full border active:border-black text-sm placeholder:text-black/50 disabled:bg-gray-100 disabled:cursor-not-allowed">
+                        <option value="" disabled
+                            {{ !session('id_lembaga') && !old('id_lembaga') ? 'selected' : '' }}>Pilih Lembaga Pemohon
+                        </option>
                         @foreach ($lembagas as $lembaga)
-                            <option value="{{ $lembaga->id }}">{{ $lembaga->name }} Universitas Udayana</option>
+                            <option value="{{ $lembaga->id }}"
+                                {{ session('id_lembaga') == $lembaga->id || old('id_lembaga') == $lembaga->id ? 'selected' : '' }}>
+                                {{ $lembaga->name }} Universitas Udayana
+                            </option>
                         @endforeach
                     </select>
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" id="submitButton"
-                    class="w-full rounded-md bg-blue-800 text-white hover:bg-blue-900 disabled:bg-blue-900 disabled:cursor-not-allowed my-4 py-2 font-semibold transition-colors">
-                    Lacak TTE
-                </button>
+                @if (session('signed_file'))
+                    <button type="button" id="downloadButton" data-path="{{ session('signed_file') }}"
+                        class="w-full rounded-md bg-blue-800 text-white hover:bg-blue-900 my-4 py-2 font-semibold transition-colors">
+                        Unduh Surat
+                    </button>
+                @else
+                    <button type="submit" id="submitButton"
+                        class="w-full rounded-md bg-blue-800 text-white hover:bg-blue-900 disabled:bg-blue-900 disabled:cursor-not-allowed my-4 py-2 font-semibold transition-colors">
+                        Lacak TTE
+                    </button>
+                @endif
             </form>
-
-            <!-- QR Code Display -->
-            @if (session('qr_code'))
-                <div class="mt-6 mx-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <h2 class="font-semibold text-center mb-4">QR Code Tanda Tangan Elektronik</h2>
-                    <div class="flex flex-col items-center space-y-4">
-                        <img src="{{ asset('storage/' . session('qr_code')) }}"
-                            alt="QR Code {{ session('nomor') }}"
-                            class="w-64 h-64 border-2 border-gray-300 rounded">
-                        <a href="{{ asset('storage/' . session('qr_code')) }}"
-                            download="QRCode-{{ session('nomor') }}.png"
-                            class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
-                            Download QR Code
-                        </a>
-                    </div>
-                </div>
-            @endif
 
             <!-- Href -->
             <p class="text-black/75 text-base font-normal text-center pt-4">
@@ -117,10 +114,25 @@
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
             const submitButton = document.getElementById('submitButton');
+            const downloadButton = document.getElementById('downloadButton');
 
-            form.addEventListener('submit', function(e) {
-                submitButton.disabled = true;
-            });
+            if (submitButton) {
+                form.addEventListener('submit', function(e) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Melacak...';
+                });
+            }
+
+            if (downloadButton) {
+                downloadButton.addEventListener('click', function() {
+                    const path = this.getAttribute('data-path');
+                    const downloadUrl = "{{ route('signature.download-from-path') }}" + "?path=" +
+                        encodeURIComponent(path);
+
+                    // Redirect ke URL download
+                    window.location.href = downloadUrl;
+                });
+            }
         });
     </script>
 </body>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('qr_code')->nullable();
             $table->string('unique_link')->unique();
             $table->text('file');
+            $table->text('signed_file')->nullable();
             $table->text('keperluan');
             $table->dateTime('accepted_at')->nullable();
             $table->foreignIdFor(User::class, 'id_user')->constrained('users', 'id')->cascadeOnDelete();
