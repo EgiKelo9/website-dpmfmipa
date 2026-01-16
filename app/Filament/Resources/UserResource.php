@@ -145,6 +145,7 @@ class UserResource extends Resource
                     ->default('Belum ditambahkan')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('role', 'asc')
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
                     ->label('Jabatan')
