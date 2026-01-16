@@ -24,14 +24,15 @@ class ListSignatures extends ListRecords
     public function getTabs(): array
     {
         return [
-            'semua' => Tab::make('Semua'),
+            'semua' => Tab::make('Semua')
+                ->modifyQueryUsing(fn($query) => $query->whereYear('created_at', date('Y'))),
             // ->badge(Signature::count()),
             'menunggu' => Tab::make('Menunggu')
-                ->modifyQueryUsing(fn($query) => $query->whereNull('accepted_at'))
-                ->badge(Signature::whereNull('accepted_at')->count()),
+                ->modifyQueryUsing(fn($query) => $query->whereNull('accepted_at')->whereYear('created_at', date('Y')))
+                ->badge(Signature::whereNull('accepted_at')->whereYear('created_at', date('Y'))->count()),
             'ditandai' => Tab::make('Ditandai')
-                ->modifyQueryUsing(fn($query) => $query->whereNotNull('accepted_at'))
-                ->badge(Signature::whereNotNull('accepted_at')->count()),
+                ->modifyQueryUsing(fn($query) => $query->whereNotNull('accepted_at')->whereYear('created_at', date('Y')))
+                ->badge(Signature::whereNotNull('accepted_at')->whereYear('created_at', date('Y'))->count()),
         ];
     }
 

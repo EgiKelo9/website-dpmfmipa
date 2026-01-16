@@ -100,7 +100,8 @@ class UserResource extends Resource
                         ->required()
                         ->maxLength(255)
                         ->hiddenOn(['view', 'edit'])
-                        ->placeholder('Masukkan Kata Sandi Pengguna'),
+                        ->placeholder('Masukkan Kata Sandi Pengguna')
+                        ->revealable(),
                 ])->columnSpan(['md' => 1, 'xl' => 2]),
             ]);
     }

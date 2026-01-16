@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class SignatureResource extends Resource
@@ -43,7 +44,8 @@ class SignatureResource extends Resource
                     Forms\Components\Select::make('id_lembaga')
                         ->required()
                         ->options(function () {
-                            return Lembaga::pluck('username', 'id');
+                            return Lembaga::whereNull('deleted_at')
+                                ->pluck('username', 'id');
                         })
                         ->columnSpanFull()
                         ->searchable()
@@ -59,10 +61,12 @@ class SignatureResource extends Resource
                         ->required()
                         ->options(function () {
                             return User::whereIn('role', ['Admin', 'Inti'])
+                                ->whereNull('deleted_at')
                                 ->pluck('name', 'id');
                         })
                         ->default(function () {
                             return User::where('specifiedRole', 'Ketua')
+                                ->whereNull('deleted_at')
                                 ->latest()
                                 ->first()
                                 ->id;
@@ -76,25 +80,23 @@ class SignatureResource extends Resource
                         ->directory('file-tte')
                         ->label('File Surat')
                         ->downloadable()
-                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
-                        ->getUploadedFileNameForStorageUsing(
-                            function (TemporaryUploadedFile $file) {
-                                return $file->getClientOriginalName();
-                            },
-                        )
-                        ->afterStateUpdated(function ($state, Forms\Set $set) {
-                            $extensions = ['.pdf', '.docx'];
-                            $filename = $state->getClientOriginalName();
-                            foreach ($extensions as $extension) {
-                                if (str_ends_with($filename, $extension)) {
-                                    $filename = str_replace($extension, '', $filename);
-                                }
-                            }
-                            $set('title', $filename);
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                            return (string) str($file
+                                ->getClientOriginalName())
+                                ->prepend(now()->format('Y-m-d H-i-s') . ' ');
                         })
                         ->visibility('public')
                         ->columnSpanFull()
-                        ->helperText('Format yang diterima: PDF, DOCX.'),
+                        ->helperText('Format yang diterima: PDF.'),
+                    Forms\Components\FileUpload::make('signed_file')
+                        ->disk('public')
+                        ->directory('signed-file')
+                        ->label('File Surat Ditandai')
+                        ->downloadable()
+                        ->visibility('public')
+                        ->visibleOn(['view'])
+                        ->columnSpanFull(),
                 ])->columnSpan(['md' => 1]),
             ]);
     }
@@ -124,39 +126,70 @@ class SignatureResource extends Resource
                 Tables\Columns\CheckboxColumn::make('accepted_at')
                     ->label('Tandai')
                     ->updateStateUsing(function ($record, $state) {
+                        $signatureController = new SignatureController();
                         if ($state) {
-                            $signatureController = new SignatureController();
-                            $qrCodePath = $signatureController->generateQRCode($record->unique_link, $record->nomor);
-                            $record->update([
-                                'accepted_at' => now(),
-                                'qr_code' => $qrCodePath,
-                            ]);
-                            Notification::make()
-                                ->title('Permohonan TTE telah ditandatangani')
-                                ->success()
-                                ->duration(5000)
-                                ->send();
+                            $result = $signatureController->signDocument($record->id);
+                            if ($result['success']) {
+                                Notification::make()
+                                    ->title('Permohonan TTE telah ditandatangani')
+                                    ->success()
+                                    ->duration(5000)
+                                    ->send();
+                            } else {
+                                Notification::make()
+                                    ->title('Gagal menandatangani dokumen: ' . $result['message'])
+                                    ->danger()
+                                    ->duration(5000)
+                                    ->send();
+                            }
                         } else {
-                            $record->update([
-                                'accepted_at' => null,
-                                'qr_code' => null,
-                            ]);
-                            Notification::make()
-                                ->title('Permohonan TTE batal ditandatangani')
-                                ->danger()
-                                ->duration(5000)
-                                ->send();
+                            $result = $signatureController->unsignDocument($record->id);
+                            if ($result['success']) {
+                                Notification::make()
+                                    ->title('Permohonan TTE batal ditandatangani')
+                                    ->success()
+                                    ->duration(5000)
+                                    ->send();
+                            } else {
+                                Notification::make()
+                                    ->title('Gagal membatalkan tanda tangan: ' . $result['message'])
+                                    ->danger()
+                                    ->duration(5000)
+                                    ->send();
+                            }
                         }
                     }),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('created_at')
+                    ->label('Tahun Dibuat')
+                    ->options(
+                        fn() => Signature::selectRaw('YEAR(created_at) as year')
+                            ->distinct()
+                            ->orderBy('year', 'desc')
+                            ->pluck('year', 'year')
+                            ->toArray()
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (isset($data['value']) && $data['value'] !== null) {
+                            return $query->whereYear('created_at', $data['value']);
+                        }
+                        return $query->whereYear('created_at', date('Y'));
+                    }),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('Unduh Dokumen')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->label('Unduh PDF')
+                        ->url(fn($record): string => route('signature.download-pdf', ['nomor' => str_replace('/', '_', $record->nomor)]), shouldOpenInNewTab: true)
+                        ->openUrlInNewTab()
+                        ->successRedirectUrl(route('filament.admin.resources.tanda-tangan-elektronik.index'))
+                        ->visible(fn($record) => $record->signed_file !== null),
                     Tables\Actions\Action::make('Unduh QR')
                         ->icon('heroicon-o-arrow-down-tray')
-                        ->label('Unduh')
+                        ->label('Unduh QR')
                         ->url(fn($record): string => route('signature.download-qr', ['nomor' => str_replace('/', '_', $record->nomor)]), shouldOpenInNewTab: true)
                         ->openUrlInNewTab()
                         ->successRedirectUrl(route('filament.admin.resources.tanda-tangan-elektronik.index'))

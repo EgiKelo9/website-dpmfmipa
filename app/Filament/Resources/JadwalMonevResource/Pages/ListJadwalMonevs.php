@@ -26,7 +26,8 @@ class ListJadwalMonevs extends ListRecords
     public function getTabs(): array
     {
         return [
-            'semua' => Tab::make('Semua'),
+            'semua' => Tab::make('Semua')
+                ->modifyQueryUsing(fn(Builder $query) => $query->whereYear('created_at', date('Y'))),
             'mendatang' => Tab::make('Mendatang')
                 ->modifyQueryUsing(function (Builder $query) {
                     $user = Auth::user();
@@ -34,9 +35,9 @@ class ListJadwalMonevs extends ListRecords
                         return $query->whereHas('timMonev', function ($query) {
                             $query->where('id_user', Auth::user()->id);
                         })
-                        ->where('notulen', false)->orderBy('tanggal', 'asc');
+                        ->where('notulen', false)->whereYear('created_at', date('Y'))->orderBy('tanggal', 'asc');
                     } else {
-                        return $query->where('notulen', false)->orderBy('tanggal', 'asc');
+                        return $query->where('notulen', false)->whereYear('created_at', date('Y'))->orderBy('tanggal', 'asc');
                     }
                 })
                 ->badge(function () {
@@ -45,9 +46,9 @@ class ListJadwalMonevs extends ListRecords
                         return JadwalMonev::query()->whereHas('timMonev', function ($query) {
                             $query->where('id_user', Auth::user()->id);
                         })
-                        ->where('notulen', false)->count();
+                        ->where('notulen', false)->whereYear('created_at', date('Y'))->count();
                     } else {
-                        return JadwalMonev::query()->where('notulen', false)->count();
+                        return JadwalMonev::query()->where('notulen', false)->whereYear('created_at', date('Y'))->count();
                     }
                 }),
             'selesai' => Tab::make('Selesai')
@@ -57,9 +58,9 @@ class ListJadwalMonevs extends ListRecords
                         return $query->whereHas('timMonev', function ($query) {
                             $query->where('id_user', Auth::user()->id);
                         })
-                        ->where('notulen', true)->orderBy('tanggal', 'desc');
+                        ->where('notulen', true)->whereYear('created_at', date('Y'))->orderBy('tanggal', 'desc');
                     } else {
-                        return $query->where('notulen', true)->orderBy('tanggal', 'desc');
+                        return $query->where('notulen', true)->whereYear('created_at', date('Y'))->orderBy('tanggal', 'desc');
                     }
                 })
                 ->badge(function () {
@@ -68,9 +69,9 @@ class ListJadwalMonevs extends ListRecords
                         return JadwalMonev::query()->whereHas('timMonev', function ($query) {
                             $query->where('id_user', Auth::user()->id);
                         })
-                        ->where('notulen', true)->count();
+                        ->where('notulen', true)->whereYear('created_at', date('Y'))->count();
                     } else {
-                        return JadwalMonev::query()->where('notulen', true)->count();
+                        return JadwalMonev::query()->where('notulen', true)->whereYear('created_at', date('Y'))->count();
                     }
                 }),
         ];

@@ -41,11 +41,11 @@ class JadwalMonevResource extends Resource
                         ->options(function () {
                             $userRole = Auth::user()->role;
                             if ($userRole === 'Admin' || $userRole === 'Komisi 4') {
-                                return ProgramKerja::pluck('name', 'id');
+                                return ProgramKerja::whereNull('deleted_at')->pluck('name', 'id');
                             } else {
                                 return ProgramKerja::whereHas('timMonev', function ($query) {
                                     $query->where('id_user', Auth::user()->id);
-                                })->pluck('name', 'id');
+                                })->whereNull('deleted_at')->pluck('name', 'id');
                             }
                         })
                         ->searchable()
@@ -127,6 +127,21 @@ class JadwalMonevResource extends Resource
                     ->label('Selesai'),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('created_at')
+                    ->label('Tahun Dibuat')
+                    ->options(
+                        fn() => JadwalMonev::selectRaw('YEAR(created_at) as year')
+                            ->distinct()
+                            ->orderBy('year', 'desc')
+                            ->pluck('year', 'year')
+                            ->toArray()
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (isset($data['value']) && $data['value'] !== null) {
+                            return $query->whereYear('created_at', $data['value']);
+                        }
+                        return $query->whereYear('created_at', date('Y'));
+                    }),
                 Tables\Filters\Filter::make('tanggal')
                     ->form([
                         Forms\Components\DatePicker::make('tanggal_kegiatan')
