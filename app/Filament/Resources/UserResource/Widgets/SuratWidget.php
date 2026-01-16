@@ -39,28 +39,28 @@ class SuratWidget extends BaseWidget
     {
         return [
             Stat::make('Jumlah Surat Masuk', function () {
-                $surats = Surat::where('type', 'Surat Masuk')->count();
+                $surats = Surat::where('type', 'Surat Masuk')->whereYear('created_at', date('Y'))->count();
                 return "{$surats} Surat";
             })
                 ->description("{$this->suratMasukDiff} dari bulan lalu")
                 ->color($this->suratMasukDiff > 0 ? 'success' : 'danger')
                 ->descriptionIcon($this->suratMasukDiff > 0 ? 'heroicon-o-arrow-trending-up' : 'heroicon-o-arrow-trending-down', IconPosition::Before),
             Stat::make('Jumlah Surat Keluar', function () {
-                $surats = Surat::where('type', 'Surat Keluar')->count();
+                $surats = Surat::where('type', 'Surat Keluar')->whereYear('created_at', date('Y'))->count();
                 return "{$surats} Surat";
             })
                 ->description("{$this->suratKeluarDiff} dari bulan lalu")
                 ->color($this->suratKeluarDiff > 0 ? 'success' : 'danger')
                 ->descriptionIcon($this->suratKeluarDiff > 0 ? 'heroicon-o-arrow-trending-up' : 'heroicon-o-arrow-trending-down', IconPosition::Before),
             Stat::make('Jumlah Laporan Masuk', function () {
-                $laporans = Laporan::count();
+                $laporans = Laporan::whereYear('created_at', date('Y'))->count();
                 return "{$laporans} Laporan";
             })
                 ->description("{$this->totalLaporanDiff} dari bulan lalu")
                 ->color($this->totalLaporanDiff > 0 ? 'success' : 'danger')
                 ->descriptionIcon($this->totalLaporanDiff > 0 ? 'heroicon-o-arrow-trending-up' : 'heroicon-o-arrow-trending-down', IconPosition::Before),
             Stat::make('Jumlah Arsip Dokumen', function () {
-                $arsips = Arsip::count();
+                $arsips = Arsip::whereYear('created_at', date('Y'))->count();
                 return "{$arsips} Arsip";
             })
                 ->description("{$this->totalArsipDiff} dari bulan lalu")

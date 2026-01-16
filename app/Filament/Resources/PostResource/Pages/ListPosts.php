@@ -25,15 +25,11 @@ class ListPosts extends ListRecords
     public function getTabs(): array
     {
         return [
-            'semua' => Tab::make('Semua')
-                ->modifyQueryUsing(fn(Builder $query) => $query->whereYear('created_at', date('Y'))),
-            // ->badge(Post::count()),
+            'semua' => Tab::make('Semua'),
             'diproses' => Tab::make('Diproses')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('diproses', false)->whereYear('created_at', date('Y')))
-                ->badge(Post::where('diproses', false)->whereYear('created_at', date('Y'))->count()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('diproses', false)),
             'selesai' => Tab::make('Selesai')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('diproses', true)->whereYear('created_at', date('Y')))
-                ->badge(Post::where('diproses', true)->whereYear('created_at', date('Y'))->count()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('diproses', true)),
         ];
     }
 

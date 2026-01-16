@@ -17,14 +17,14 @@ class RingkasanWidget extends BaseWidget
                 $userId = Auth::user()->id;
                 $count = ProgramKerja::whereHas('timMonev', function ($query) use ($userId) {
                     $query->where('id_user', $userId);
-                })->count();
+                })->whereYear('created_at', date('Y'))->count();
                 return "{$count} Proker";
             }),
             Stat::make('Total Partisipasi Monev', function () {
                 $userId = Auth::user()->id;
                 $count = JadwalMonev::whereHas('timMonev', function ($query) use ($userId) {
                     $query->where('id_user', $userId)->where('hadir', 1);
-                })->count();
+                })->whereYear('created_at', date('Y'))->count();
                 return "{$count} Kegiatan";
             }),
             Stat::make('Persentase Keaktifan Monev', function () {
@@ -32,7 +32,7 @@ class RingkasanWidget extends BaseWidget
                 $total = 15;
                 $hadir = JadwalMonev::whereHas('timMonev', function ($query) use ($userId) {
                     $query->where('id_user', $userId)->where('hadir', 1);
-                })->count();
+                })->whereYear('created_at', date('Y'))->count();
                 $persentase = $hadir < 15 ? number_format(($hadir / $total) * 100, 2) : 100;
                 return "{$persentase}%";
             }),

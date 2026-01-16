@@ -15,7 +15,9 @@ class ProgramKerjaWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(ProgramKerja::query()->whereHas('timMonev', function ($query) {
+            ->query(ProgramKerja::query()
+            ->whereYear('created_at', date('Y'))
+            ->whereHas('timMonev', function ($query) {
                 $query->where('id_user', Auth::user()->id);
             }))
             ->defaultSort('created_at', 'desc')

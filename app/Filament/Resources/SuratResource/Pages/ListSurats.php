@@ -26,13 +26,10 @@ class ListSurats extends ListRecords
     {
         return [
             'semua' => Tab::make('Semua'),
-            // ->badge(Surat::count()),
             'masuk' => Tab::make('Surat Masuk')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'Surat Masuk'))
-                ->badge(Surat::where('type', 'Surat Masuk')->count()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'Surat Masuk')),
             'keluar' => Tab::make('Surat Keluar')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'Surat Keluar'))
-                ->badge(Surat::where('type', 'Surat Keluar')->count()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'Surat Keluar')),
         ];
     }
 

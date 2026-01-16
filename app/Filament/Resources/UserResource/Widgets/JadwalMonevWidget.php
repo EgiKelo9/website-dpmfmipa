@@ -15,7 +15,9 @@ class JadwalMonevWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(JadwalMonev::query()->whereHas('timMonev', function ($query) {
+            ->query(JadwalMonev::query()
+            ->whereYear('created_at', date('Y'))
+            ->whereHas('timMonev', function ($query) {
                 $query->where('id_user', Auth::user()->id)->where('tanggal', '>=', now()->toDateString());
             }))
             ->defaultSort('tanggal', 'asc')
