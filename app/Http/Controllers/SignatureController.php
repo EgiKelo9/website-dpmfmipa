@@ -297,7 +297,13 @@ class SignatureController extends Controller
             Storage::disk('public')->delete($signature->signed_file);
         }
 
+        // Hapus QR code jika ada
+        if ($signature->qr_code && Storage::disk('public')->exists($signature->qr_code)) {
+            Storage::disk('public')->delete($signature->qr_code);
+        }
+
         // Reset fields
+        $signature->qr_code = null;
         $signature->signed_file = null;
         $signature->accepted_at = null;
         $signature->save();
